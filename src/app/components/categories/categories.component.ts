@@ -42,8 +42,17 @@ constructor(private _ProductsService:ProductsService){}
     navText: ['', ''],
     responsive: {
       0: {
-        items: 7
+        items: 3
       },
+      400:{
+        items:3
+      },
+      500: {
+        items: 4
+      },
+      768 : {
+        items: 7
+      }
     },
     nav: false
   }
