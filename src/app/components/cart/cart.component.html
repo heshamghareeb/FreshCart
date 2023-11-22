@@ -8,11 +8,11 @@
 
     <h6 *ngIf="cart?.data?.totalCartPrice" class="text-main">Total Price : {{cart?.data?.totalCartPrice | currency:'EGP'}}</h6>
 
-    <div class="row align-items-center border-bottom py-3" *ngFor="let product of cart?.data?.products">
+    <div class="row align-items-center border-bottom" *ngFor="let product of cart?.data?.products">
       <div class="col-md-1"><img class="w-100" [src]="product.product.imageCover" alt=""></div>
 
-      <div class="col-md-11 d-flex justify-content-between">
-        <div class="w-75">
+      <div class="col-md-11 py-3 py-xs-3 d-flex justify-content-between">
+        <div class="w-xs-50 w-auto">
           <h6 >{{product.product.title}}</h6>
           <h6 class="text-main">Price: {{product.price}}</h6>
                 <button (click)="removeCart(product.product._id)" class="btn btn-danger mt-1"> <i class="fa-regular fa-trash-can"></i> Remove From Cart</button>

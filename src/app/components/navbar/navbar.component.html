@@ -50,9 +50,9 @@
           <a class="nav-link" routerLink="register">Register</a>
         </li>
 
-        <li *ngIf="isLogin" class="nav-item">
+        <!-- <li *ngIf="isLogin" class="nav-item">
           <a routerLink="settings" class="nav-link cursor-pointer">Settings</a>
-        </li>
+        </li> -->
 
         <li *ngIf="isLogin" class="nav-item">
           <span (click)="logOut()" class="nav-link cursor-pointer">Logout</span>
@@ -61,7 +61,7 @@
         <li *ngIf="isLogin" class="nav-item">
           <a class="nav-link position-relative" routerLink="cart">
             <i class="fas fa-cart-shopping text-main fa-lg"></i>
-            <span class="badge bg-main text-white position-absolute top-25 start-100 translate-middle rounded-pill">{{numberOfCartItems}}</span>
+            <span class="cart-item-pill badge bg-main text-white position-absolute top-25 start-100 translate-middle rounded-pill">{{numberOfCartItems}}</span>
           </a>
         </li>
 
