@@ -1,41 +1,124 @@
-<div class="w-75 mx-auto py-4">
+<section class="bg-main-light rounded shadow p-3">
+  <h1 class="display-4 text-center">Login Now</h1>
 
-  <h4>Login Now</h4>
-  <div *ngIf="apiError" class="alert alert-danger">{{apiError}}</div>
-  <!-- <form (submit)="login()" #f=""></form> -->
-  <form (ngSubmit)="login(loginForm)" [formGroup]="loginForm">
+  <form
+    class="vstack gap-3 w-75 mx-auto"
+    [formGroup]="loginForm"
+    (ngSubmit)="handleLogin()"
+  >
+    <div class="form-item">
+      <label for="email">Email:</label>
+      <input
+        formControlName="email"
+        id="email"
+        type="email"
+        class="form-control"
+        placeholder="Your Email...."
+      />
 
-    <label for="email">Email: </label>
-    <input formControlName="email" type="email" id="email" class="form-control mb-2">
-    <div *ngIf="loginForm.get('email')?.errors && loginForm.get('email')?.touched" class="alert alert-danger">
-      <p *ngIf="loginForm.get('email')?.getError('email')" class="m-0"> Email invalid</p>
-      <p *ngIf="loginForm.get('email')?.getError('required')" class="m-0"> Email is required</p>
+      <ng-container
+        *ngIf="
+          f['email'].errors && (f['email'].value.length || f['email'].touched)
+        "
+      >
+        <p
+          class="alert alert-danger w-50 mx-auto p-1 mb-0"
+          *ngIf="f['email'].getError('required')"
+        >
+          Email Is Required
+        </p>
+        <p
+          class="alert alert-danger w-50 mx-auto p-1 mb-0"
+          *ngIf="f['email'].getError('email')"
+        >
+          Email Invalid Format
+        </p>
+      </ng-container>
     </div>
 
-    <label for="password">Password: </label>
-    <div class="password-input-container">
-      <input formControlName="password" [type]="show ? 'text' : 'password'" id="password" class="form-control mb-2">
-      <i (click)="showPassword()" class="toggle-icon" [class]="show ? 'fa fa-eye':'fa fa-eye-slash' " aria-hidden="true"></i>
-    </div>
-    <div *ngIf="loginForm.get('password')?.errors && loginForm.get('password')?.touched" class="alert alert-danger">
-      <p *ngIf="loginForm.get('password')?.getError('pattern')" class="m-0"> Password must have At least one uppercase letter</p>
-      <p *ngIf="loginForm.get('password')?.getError('required')" class="m-0"> Password is required</p>
+    <div class="form-item">
+      <label for="password">Password:</label>
+      <div class="position-relative">
+        <input #pass
+          formControlName="password"
+          id="password"
+          type="password"
+          class="form-control"
+          placeholder="Your Password...."
+        />
+        <span
+          (click)="
+            passwordShow = true;
+            passwordShow == true
+              ? (pass.type = 'text')
+              : (pass.type = 'password')
+          "
+          [ngClass]="{
+            'd-none': passwordShow
+          }"
+          role="button"
+          class="position-absolute top-50 end-0 translate-middle-y me-2"
+        >
+          <i class="fas fa-eye"></i>
+        </span>
+
+        <span
+          (click)="passwordShow = false; passwordShow == false
+              ? (pass.type = 'password')
+              : (pass.type = 'text')"
+          [ngClass]="{'d-none': !passwordShow}"
+          role="button"
+          class="position-absolute top-50 end-0 translate-middle-y me-2"
+        >
+          <i class="fas fa-eye-slash"></i>
+        </span>
+      </div>
+
+      <ng-container
+        *ngIf="
+          f['password'].errors &&
+          (f['password'].value.length || f['password'].touched)
+        "
+      >
+        <p
+          class="alert alert-danger w-50 mx-auto p-1 mb-0"
+          *ngIf="f['password'].getError('required')"
+        >
+          Password Is Required
+        </p>
+        <p
+          class="alert alert-danger w-50 mx-auto p-1 mb-0"
+          *ngIf="f['password'].getError('pattern')"
+        >
+          Must be at least 6 chars
+        </p>
+      </ng-container>
     </div>
 
-    <button [disabled]="loginForm.invalid" type="submit" class="btn d-block ms-auto border-0 bg-main text-white my-3 ">
-      <i *ngIf="isLoading" class="fa fa-spinner fa-spin"></i>
-      <span *ngIf="!isLoading">login</span>
-    </button>
+    <div class="hstack justify-content-between">
+      <button
+        *ngIf="!isLoading"
+        type="submit"
+        [disabled]="loginForm.invalid"
+        class="main-btn"
+      >
+        <span>Login</span>
+      </button>
+
+      <button *ngIf="isLoading" type="button" disabled class="main-btn me-auto">
+        <span> <i class="fas fa-spinner fa-spin"></i> </span>
+      </button>
+
+      <a role="button" class="link-primary" routerLink="/forgotlogin"
+        >Forgot Password</a
+      >
+    </div>
+
+    <!-- <p
+      class="alert alert-danger text-center w-50 mx-auto mb-0 p-1 mt-3"
+      *ngIf="errMsg"
+    >
+      {{ errMsg }}
+    </p> -->
   </form>
-
-</div>
-
-
-
-
-
-
-
-
-
-
+</section>

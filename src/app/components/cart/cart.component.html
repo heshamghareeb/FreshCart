@@ -1,33 +1,69 @@
-<div class="w-100 text-center">
-  <i *ngIf="isLoading" class="fa fa-spinner fa-spin h1 p-5"></i>
-</div>
-
-<div *ngIf="!isLoading" class="row">
-  <div class="bg-main-light p-4 my-4">
-    <h3>Shop Cart</h3>
-
-    <h6 *ngIf="cart?.data?.totalCartPrice" class="text-main">Total Price : {{cart?.data?.totalCartPrice | currency:'EGP'}}</h6>
-
-    <div class="row align-items-center border-bottom" *ngFor="let product of cart?.data?.products">
-      <div class="col-md-1"><img class="w-100" [src]="product.product.imageCover" alt=""></div>
-
-      <div class="col-md-11 py-3 py-xs-3 d-flex justify-content-between">
-        <div class="w-xs-50 w-auto">
-          <h6 >{{product.product.title}}</h6>
-          <h6 class="text-main">Price: {{product.price}}</h6>
-                <button (click)="removeCart(product.product._id)" class="btn btn-danger mt-1"> <i class="fa-regular fa-trash-can"></i> Remove From Cart</button>
-        </div>
-        <div class="my-3">
-          <button (click)="updateQuantity(product.product._id, product.count+1)" class="btn btn-success btn-sm mr-2">+</button>
-          <span class="mx-3">{{product.count}}</span>
-          <button  (click)="product.count == 1  ? removeCart(product.product._id) :updateQuantity(product.product._id, product.count-1)" class="btn btn-danger btn-sm mr-2">-</button>
-        </div>
-      </div>
-
-    </div>
-
-    <button routerLink="/checkout" *ngIf="cart?.data?.products?.length" class="btn bg-main text-white mt-3">
-      Online Payment
+<section
+  class="w-75 mx-auto rounded shadow bg-main-light p-3 mb-3"
+  *ngIf="cartDetails; else msg"
+>
+  <div class="d-flex justify-content-between align-items-center">
+    <h1 class="h2">Shop Cart</h1>
+    <button (click)="clear()" class="btn btn-sm btn-outline-danger">
+      Clear Cart
     </button>
   </div>
-</div>
+
+  <p class="text-main">
+    Total Price: {{ cartDetails.totalCartPrice | currency : "EGP " }}
+  </p>
+
+  <div class="row border-bottom py-2" *ngFor="let item of cartDetails.products">
+    <div class="col-md-1">
+      <img
+        class="w-100"
+        [src]="item.product.imageCover"
+        [alt]="item.product.title"
+      />
+    </div>
+
+    <div class="col-md-11 d-flex justify-content-between align-items-center">
+      <div>
+        <h3 class="h6">{{ item.product.title }}</h3>
+        <p class="text-main small mb-0">
+          Price: {{ item.price | currency : "EGP " }}
+        </p>
+        <button
+          #btnRemove
+          (click)="removeItem(item.product._id, btnRemove)"
+          class="btn m-0 p-0 text-main"
+        >
+          <i class="fas fa-trash-can"></i> Remove
+        </button>
+      </div>
+
+      <div>
+        <button
+          #btn1
+          (click)="changeCount(item.count - 1, item.product._id, btn1, btn2)"
+          class="btn btn-sm border-success"
+        >
+          -
+        </button>
+
+        <span> {{ item.count }} </span>
+
+        <button
+          #btn2
+          (click)="changeCount(item.count + 1, item.product._id, btn1, btn2)"
+          class="btn btn-sm border-success"
+        >
+          +
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <button [routerLink]="['/payment', cartDetails._id]" class="main-btn mt-3">
+    Online Payment <img src="./assets/images/visa.svg" alt="visa logo" />
+  </button>
+</section>
+
+<ng-template #msg>
+  <h2 class="text-center">Your Cart Is Empty...</h2>
+</ng-template>

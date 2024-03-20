@@ -1,64 +1,81 @@
-import { Component, OnInit } from '@angular/core';
-import { CartService } from '../../services/cart.service';
-import { GetCartModel } from 'src/core/models/get.cart.model';
+import { Component, OnInit, Renderer2 } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { CartService } from 'src/app/common/services/cart.service';
+import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-cart',
+  standalone: true,
+  imports: [CommonModule, RouterLink],
   templateUrl: './cart.component.html',
-  styleUrls: ['./cart.component.css']
+  styleUrls: ['./cart.component.scss'],
 })
-export class CartComponent implements OnInit{
-  isLoading:boolean = false;
-  cart?:GetCartModel;
+export class CartComponent implements OnInit {
+  constructor(
+    private _CartService: CartService,
+    private _Renderer2: Renderer2
+  ) {}
+  cartDetails: any = null;
 
-constructor(private _CartService:CartService){}
   ngOnInit(): void {
-    this.getCart();
+    this._CartService.getCartUser().subscribe({
+      next: (response) => {
+        console.log('getcart', response);
+        this.cartDetails = response.data;
+      },
+    });
   }
 
-getCart(){
-  this.isLoading = true;
-  this._CartService.getLoggedUserCart().subscribe({
-    next:(res:GetCartModel) =>{
-      this.cart = res;
-      // console.log(res);
-      this._CartService.numberOfCartItems.next(res.numOfCartItems)
-      this._CartService.cartId = res.data._id;
-      this.isLoading = false;
-    },
-    error:(err)=>{
-      console.log('Error');
-    this.isLoading = false;},
-  });
-}
+  removeItem(id: string, element: HTMLButtonElement): void {
+    this._Renderer2.setAttribute(element, 'disabled', 'true');
 
-removeCart(productId:string){
-  this.isLoading = true;
-  this._CartService.removeFromCart(productId).subscribe({
-    next:(response)=>{
-      this.cart = response;
-      this._CartService.numberOfCartItems.next(response.numOfCartItems)
-      this.isLoading = false;
-    },
-    error:(error)=>{
-      // console.log(error);
-      this.isLoading = false;
-    }
-  });
-}
+    this._CartService.removeCartItem(id).subscribe({
+      next: (response) => {
+        console.log('remove', response);
+        this.cartDetails = response.data;
+        this._Renderer2.removeAttribute(element, 'disabled');
 
-updateQuantity(productId:string , count:number){
-  this.isLoading = true;
-  this._CartService.updateCartProductQuantity(productId, count).subscribe({
-    next:(response)=>{
-      this.cart = response;
-      this._CartService.numberOfCartItems.next(response.numOfCartItems)
-      this.isLoading = false;
-    },
-    error:(error)=>{
-      // console.log(error);
-      this.isLoading = false;
+        this._CartService.cartNumber.next(response.numOfCartItems);
+      },
+      error: (err) => {
+        this._Renderer2.removeAttribute(element, 'disabled');
+      },
+    });
+  }
+
+  ///          0
+  changeCount(
+    count: number,
+    id: string,
+    el1: HTMLButtonElement,
+    el2: HTMLButtonElement
+  ): void {
+    if (count >= 1) {
+      this._Renderer2.setAttribute(el1, 'disabled', 'true');
+      this._Renderer2.setAttribute(el2, 'disabled', 'true');
+
+      this._CartService.updateCartCount(id, count).subscribe({
+        next: (response) => {
+          this.cartDetails = response.data;
+          this._Renderer2.removeAttribute(el1, 'disabled');
+          this._Renderer2.removeAttribute(el2, 'disabled');
+        },
+        error: (err) => {
+          this._Renderer2.removeAttribute(el1, 'disabled');
+          this._Renderer2.removeAttribute(el2, 'disabled');
+        },
+      });
     }
-  });
-}
+  }
+
+  clear(): void {
+    this._CartService.clearCart().subscribe({
+      next: (response) => {
+        if (response.message === 'success') {
+          this.cartDetails = null;
+          this._CartService.cartNumber.next(0);
+        }
+      },
+    });
+  }
 }

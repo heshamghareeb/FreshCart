@@ -1,36 +1,175 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { HomeComponent } from './components/home/home.component';
-import { AboutComponent } from './components/about/about.component';
-import { CategoriesComponent } from './components/categories/categories.component';
-import { CartComponent } from './components/cart/cart.component';
-import { BrandsComponent } from './components/brands/brands.component';
-import { LoginComponent } from './components/login/login.component';
-import { NotfoundComponent } from './components/notfound/notfound.component';
-import { SignupComponent } from './components/signup/signup.component';
-import { AuthGuard } from 'src/core/guard/auth.guard';
-import { ProductdetailsComponent } from './components/productdetails/productdetails.component';
-import { CheckoutComponent } from './components/checkout/checkout.component';
+import { authGuard, authGuardLogin } from './common/gurads/auth.guard';
 
 const routes: Routes = [
-  {path: '', redirectTo: 'home', pathMatch: 'full'},
-  {path: 'home', component: HomeComponent, },
+  //auth
+  {
+    canActivate: [authGuardLogin],
+    path: '',
+    loadComponent: () =>
+      import('./layouts/auth/auth.component').then((m) => m.AuthComponent),
+    children: [
+      {
+        path: 'login',
+        loadComponent: () =>
+          import('./components/login/login.component').then(
+            (m) => m.LoginComponent
+          ),
+      },
+      {
+        path: 'register',
+        loadComponent: () =>
+          import('./components/register/register.component').then(
+            (m) => m.RegisterComponent
+          ),
+      },
+    {
+        path: 'forgotlogin',
+        loadComponent: () =>
+          import('./components/forgotpassword/forgotpassword.component').then(
+            (m) => m.ForgotpasswordComponent
+          ),
+      },
+    ],
+  },
 
-  {path: 'about', component: AboutComponent, },
-  {path: 'brands', component: BrandsComponent, },
-  {path: 'cart', component: CartComponent, canActivate:[AuthGuard]},
-  {path: 'checkout', component: CheckoutComponent, canActivate:[AuthGuard]},
-  {path: 'categories', component: CategoriesComponent,},
-  {path: 'productdetails/:id', component: ProductdetailsComponent,},
-  {path: 'login', component: LoginComponent},
-  {path: 'register', component: SignupComponent},
-  {path: 'settings', loadChildren:()=> import('./settings/settings.module').then((module)=>module.SettingsModule)},
-  // {path: 'settings/reset', loadChildren:()=> import('./settings/settings.module').then((module)=>module.SettingsModule)},
-  {path: '**', component: NotfoundComponent},
+  //blank
+  {
+    canActivate: [authGuard],path: '',loadComponent: () =>
+      import('./layouts/blank/blank.component').then((m) => m.BlankComponent),
+    children: [
+      { path: '', redirectTo: 'home', pathMatch: 'full' },
+      {
+        path: 'home',
+        loadComponent: () =>
+          import('./components/home/home.component').then(
+            (m) => m.HomeComponent
+          ),
+      },
+      {
+        path: 'products',
+        loadComponent: () =>
+          import('./components/products/products.component').then(
+            (m) => m.ProductsComponent
+          ),
+        title: 'Products',
+      },
+      {
+        path: 'productdetails/:id',
+        loadComponent: () =>
+          import(
+            './components/details/details.component'
+          ).then((m) => m.DetailsComponent),
+      },
+      //Brands
+      {
+        path: 'brands',
+        loadComponent: () =>
+          import('./components/brands/brands.component').then(
+            (m) => m.BrandsComponent
+          ),
+        title: 'Brands',
+      },
+      {
+        path: 'brands/:id',
+        loadComponent: () =>
+          import('./components/products-by/products-by.component').then(
+            (m) => m.ProductsByComponent
+          ),
+        title: 'Brands',
+      },
+      //Whishlist
+      {
+        path: 'whishlist',
+        loadComponent: () =>
+          import('./components/whishlist/whishlist.component').then(
+            (m) => m.WhishlistComponent
+          ),
+      },
+      //Categories
+      {
+        path: 'categories',
+        loadComponent: () =>
+          import('./components/categories/categories.component').then(
+            (m) => m.CategoriesComponent
+          ),
+        title: 'Categories',
+      },
+      {
+        path: 'categorydetails/:id',
+        loadComponent: () =>
+          import('./components/products-by/products-by.component').then(
+            (m) => m.ProductsByComponent
+          ),
+        title: 'Category Details',
+      },
+      //Cart
+      {
+        path: 'cart',
+        loadComponent: () =>
+          import('./components/cart/cart.component').then(
+            (m) => m.CartComponent
+          ),
+        title: 'Cart',
+      },
+      //Payment
+      {
+        path: 'payment/:id',
+        loadComponent: () =>
+          import('./components/payment/payment.component').then(
+            (m) => m.PaymentComponent
+          ),
+        title: 'Payment',
+      },
+
+
+      {
+        path: 'forgot',
+        loadComponent: () =>
+          import('./components/forgotpassword/forgotpassword.component').then(
+            (m) => m.ForgotpasswordComponent
+          ),
+      },
+      {
+        path: 'updatepass',
+        loadComponent: () =>
+          import('./components/updatepass/updatepass.component').then(
+            (m) => m.UpdatepassComponent
+          ),
+      },
+      {
+        path: 'profile',
+        loadComponent: () =>
+          import('./components/profile/profile.component').then(
+            (m) => m.ProfileComponent
+          ),
+      },
+
+
+
+
+
+    ],
+  },
+
+  //notfound  
+  {
+    path: '**',
+    loadComponent: () =>
+      import('./components/notfound/notfound.component').then(
+        (m) => m.NotfoundComponent
+      ),
+  },
+
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes,)],
-  exports: [RouterModule]
+  imports: [
+    RouterModule.forRoot(routes, {
+      scrollPositionRestoration: 'enabled',
+    }),
+  ],
+  exports: [RouterModule],
 })
-export class AppRoutingModule { }
+export class AppRoutingModule {}

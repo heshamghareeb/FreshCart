@@ -1,12 +1,22 @@
-<div *ngIf="!apiError" class="row p-3 mb-5">
-  <owl-carousel-o [options]="customOptions">
-
-    <ng-container class="col-md-6" *ngFor="let category of allCategories?.data">
-      <ng-template class="col-md-6" carouselSlide [id]="category._id">
-        <img height="200" [src]="category.image" [alt]="category.name">
-        <h4 class="h6 fw-bolder  text-center">{{category.name}}</h4>
-      </ng-template>
-    </ng-container>
-
-  </owl-carousel-o>
-</div>
+<section class="my-4">
+  <div class="row g-4 justify-content-center">
+    <div
+      *ngFor="let category of categoryData"
+      class="col-sm-6 col-md-4 col-lg-3"
+    >
+      <div
+        [routerLink]="['/categorydetails', category._id]"
+        role="button"
+        class="border border-success rounded p-2 shadow"
+      >
+        <img
+          class="w-100"
+          height="270"
+          [src]="category.image"
+          [alt]="category.name"
+        />
+        <h3 class="text-center text-main">{{ category.name }}</h3>
+      </div>
+    </div>
+  </div>
+</section>

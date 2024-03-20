@@ -1,57 +1,62 @@
-import { Component, OnInit } from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
-import { AuthService } from '../../services/auth/auth.service';
-
+import { CommonModule } from '@angular/common';
+import { Component } from '@angular/core';
+import {
+  AbstractControl,
+  FormBuilder,
+  FormGroup,
+  ReactiveFormsModule,
+  Validators,
+} from '@angular/forms';
+import { Router, RouterLink } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
+import { AuthService } from 'src/app/common/services/auth.service';
 
 @Component({
   selector: 'app-login',
+  standalone: true,
+  imports: [CommonModule, ReactiveFormsModule, RouterLink],
   templateUrl: './login.component.html',
-  styleUrls: ['./login.component.css'],
+  styleUrls: ['./login.component.scss'],
 })
-export class LoginComponent implements OnInit{
-  constructor(private _AuthService: AuthService, private _Router: Router) {}
-  ngOnInit(): void {
-    if(localStorage.getItem("token") !== null){
-      this._Router.navigate(['/home']);
-    }
-  }
+export class LoginComponent {
+  constructor(
+    private _AuthService: AuthService,
+    private _fb: FormBuilder,
+    private _Router: Router,
+    private toastr: ToastrService
+  ) {}
 
+  passwordShow: boolean = false;
+
+  loginForm!: FormGroup;
   isLoading: boolean = false;
-  show: boolean = false;
-  apiError: string = '';
 
-  loginForm: FormGroup = new FormGroup({
-    email: new FormControl(null, [Validators.required, Validators.email]),
-    password: new FormControl(null, [
-      Validators.required,
-      Validators.pattern(/^(?=.*[a-z])(?=.*[A-Z])[A-Za-z\d@$!%*?&]{6,}$/),
-    ]),
-  });
-
-  showPassword() {
-    this.show = !this.show;
+  ngOnInit(): void {
+    this.loginForm = this._fb.group({
+      email: ['', [Validators.required, Validators.email]],
+      password: ['', [Validators.required, Validators.pattern(/^\w{6,}$/)]],
+    });
   }
 
-  login(loginForm: FormGroup) {
+  public get f(): {[key: string]: AbstractControl<any, any>;} {
+    return this.loginForm.controls;
+  }
+
+  handleLogin(): void {
     this.isLoading = true;
-    if (loginForm.valid) {
-      this._AuthService.login(loginForm.value).subscribe({
+    if (this.loginForm.valid) {
+      this._AuthService.setLogin(this.loginForm.value).subscribe({
         next: (response) => {
           if (response.message === 'success') {
-            localStorage.setItem('token', response.token);
-            this._AuthService.decodeUserToken();
             this.isLoading = false;
-            this._Router.navigate(['/home', { skipLocationChange: true }]);
-          //   this._Router.navigateByUrl('/cart', { skipLocationChange: true }).then(() => {
-          //     this._Router.navigate(['/home']);
-          // });
-            // window.location.href = '/home';
+            localStorage.setItem('_token', response.token);
+            this._AuthService.saveUser();
+            this._Router.navigate(['/home']);
           }
         },
         error: (err) => {
           this.isLoading = false;
-          this.apiError = err.error.message;
+          this.toastr.error(err.error.message, 'Error', {'progressBar':true,});
         },
       });
     }

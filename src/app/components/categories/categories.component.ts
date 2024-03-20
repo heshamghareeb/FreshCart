@@ -1,59 +1,25 @@
 import { Component, OnInit } from '@angular/core';
-import { ProductsService } from 'src/app/services/products/products.service';
-import { CategoriesModel } from 'src/core/models/categories.model';
-import { OwlOptions } from 'ngx-owl-carousel-o';
+import { CommonModule } from '@angular/common';
+import { ProductService } from 'src/app/common/services/product.service';
+import { Category } from 'src/app/common/interfaces/category';
+import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-categories',
+  standalone: true,
+  imports: [CommonModule, RouterLink],
   templateUrl: './categories.component.html',
-  styleUrls: ['./categories.component.css']
+  styleUrls: ['./categories.component.scss'],
 })
-export class CategoriesComponent implements OnInit{
-  // isLoading:boolean = false;
-  apiError:boolean = false;
-  allCategories?:CategoriesModel;
-constructor(private _ProductsService:ProductsService){}
+export class CategoriesComponent implements OnInit {
+  constructor(private _ProductService: ProductService) {}
+  categoryData: Category[] = [];
 
   ngOnInit(): void {
-    // this.isLoading = true;
-    this._ProductsService.getAllCategories().subscribe({
-      next:(response)=> {
-          this.allCategories = response;
-          // this.isLoading = false;
-      },
-      error:(err)=> {
-        this.apiError = true
-        // this.isLoading = false;
+    this._ProductService.getCategories().subscribe({
+      next: (response) => {
+        this.categoryData = response.data;
       },
     });
-  }
-
-  customOptions: OwlOptions = {
-    autoplay: true,
-    autoplaySpeed: 700,
-    autoplayTimeout: 5000,
-    autoplayHoverPause: true,
-    loop: true,
-    mouseDrag: true,
-    touchDrag: false,
-    pullDrag: false,
-    dots: false,
-    navSpeed: 700,
-    navText: ['', ''],
-    responsive: {
-      0: {
-        items: 3
-      },
-      400:{
-        items:3
-      },
-      500: {
-        items: 4
-      },
-      768 : {
-        items: 7
-      }
-    },
-    nav: false
   }
 }

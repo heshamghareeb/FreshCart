@@ -1,7 +1,11 @@
-<nav class="navbar navbar-expand-sm navbar-light bg-light">
-  <div class="container">
-    <img src="assets/images/freshcart-logo.svg" alt="" />
-
+<nav
+  #navbar
+  class="navbar shadow-sm navbar-expand-lg fixed-top navbar-light bg-light"
+>
+  <div class="container-fluid">
+    <a class="navbar-brand" routerLink="/">
+      <img src="./assets/images/freshcart-logo.svg" alt="freshCart" />
+    </a>
     <button
       class="navbar-toggler d-lg-none"
       type="button"
@@ -16,59 +20,134 @@
     <div class="collapse navbar-collapse" id="collapsibleNavId">
       <ul class="navbar-nav me-auto mt-2 mt-lg-0">
         <li class="nav-item">
-          <a class="nav-link" routerLink="home">Home</a>
-        </li>
-<!--
-        <li class="nav-item">
-          <a class="nav-link" routerLink="products">Products</a>
+          <a class="nav-link" routerLinkActive="active-link" routerLink="/home"
+            >Home</a
+          >
         </li>
 
         <li class="nav-item">
-          <a class="nav-link" routerLink="categories">Categories</a>
+          <a
+            class="nav-link"
+            routerLinkActive="active-link"
+            routerLink="/products"
+            >Products</a
+          >
         </li>
 
         <li class="nav-item">
-          <a class="nav-link" routerLink="brands">Brands</a>
-        </li> -->
+          <a
+            class="nav-link"
+            routerLinkActive="active-link"
+            routerLink="/brands"
+            >Brands</a
+          >
+        </li>
+
+        <li class="nav-item">
+          <a
+            class="nav-link"
+            routerLinkActive="active-link"
+            routerLink="/categories"
+            >Categories</a
+          >
+        </li>
       </ul>
 
       <ul class="navbar-nav ms-auto mt-2 mt-lg-0">
-        <li class="nav-item d-flex align-items-center">
-          <i class="mx-2 fab fa-instagram"></i>
-          <i class="mx-2 fab fa-facebook"></i>
-          <i class="mx-2 fab fa-tiktok"></i>
-          <i class="mx-2 fab fa-twitter"></i>
-          <i class="mx-2 fab fa-linkedin"></i>
-          <i class="mx-2 fab fa-youtube"></i>
-        </li>
 
-        <li *ngIf="!isLogin" class="nav-item">
-          <a class="nav-link" routerLink="login">Login</a>
-        </li>
-
-        <li *ngIf="!isLogin" class="nav-item">
-          <a class="nav-link" routerLink="register">Register</a>
-        </li>
-
-        <!-- <li *ngIf="isLogin" class="nav-item">
-          <a routerLink="settings" class="nav-link cursor-pointer">Settings</a>
-        </li> -->
-
-        <li *ngIf="isLogin" class="nav-item">
-          <span (click)="logOut()" class="nav-link cursor-pointer">Logout</span>
-        </li>
-
-        <li *ngIf="isLogin" class="nav-item">
-          <a class="nav-link position-relative" routerLink="cart">
-            <i class="fas fa-cart-shopping text-main fa-lg"></i>
-            <span class="cart-item-pill badge bg-main text-white position-absolute top-25 start-100 translate-middle rounded-pill">{{numberOfCartItems}}</span>
+        <li class="nav-item me-4 hstack">
+          <a routerLink="/whishlist" class="text-main number-item">
+            <i class="fas fa-heart fa-2x"></i>
+            <!-- <span *ngIf="whishItemNumber"> {{ whishItemNumber }} </span> -->
+            <span *ngIf="whishItemNumberS"> {{ whishItemNumberS }} </span>
           </a>
         </li>
 
+        <li class="nav-item me-2">
+          <div class="dropdown">
+            <button
+              class="dropdown-toggle"
+              type="button"
+              data-bs-toggle="dropdown"
+              aria-expanded="false"
+            >
+              <i class="fas fa-user text-success"></i>
+            </button>
+            <ul class="dropdown-menu">
+              <!-- <li>
+                <a
+                  class="dropdown-item small"
+                  routerLinkActive="active-link"
+                  routerLink="/forgot"
+                  >Forgot Password</a
+                >
+              </li> -->
+              <li>
+                <a
+                  class="dropdown-item small"
+                  routerLinkActive="active-link"
+                  routerLink="/updatepass"
+                  >Update password</a
+                >
+              </li>
+              <!-- <li>
+                <a
+                  class="dropdown-item small"
+                  routerLinkActive="active-link"
+                  routerLink="/profile"
+                  >Profile</a
+                >
+              </li>
+              <li>
+                <a
+                  class="dropdown-item small"
+                  routerLinkActive="active-link"
+                  routerLink="/allorders"
+                  >My Orders</a
+                >
+              </li> -->
+            </ul>
+          </div>
+        </li>
+
+        <!-- <li class="nav-item me-4 hstack">
+          <a class="nav-link position-relative" routerLink="/cart">
+            <i class="fas fa-cart-shopping fa-2x text-main"></i>
+            <span class="badge bg-info position-absolute top-0 end-0">
+              {{ cartItemNumberS }}
+            </span>
+          </a>
+        </li> -->
+
+        <li class="nav-item me-4 hstack">
+          <a class="nav-link position-relative" routerLink="/cart" >
+            <i class="fas fa-cart-shopping fa-2x text-main"></i>
+            <span class="badge bg-info position-absolute top-0 end-0">
+              {{ cartItemNumberS }}
+            </span>
+            <!-- <span *ngIf="cartItemNumberS"> {{ cartItemNumberS }} </span> -->
+          </a>
+        </li>
+
+        <li class="nav-item d-flex align-items-center gap-3 me-4">
+          <a
+            href="https://www.facebook.com/HxBoss"
+            target="_blank"
+            class="text-reset"
+            style="color: #4267B2 !important;"
+            ><i class="fab fa-facebook h4" ></i>
+          </a>
+          <a
+            target="_blank"
+            href="https://api.whatsapp.com/send?phone=01119244463"
+            class="text-reset"
+            ><i class="fab fa-whatsapp text-main h4"></i
+          ></a>
+        </li>
+        <li class="nav-item">
+          <span (click)="logOut()" class="nav-link h5" role="button">SignOut</span>
+        </li>
       </ul>
-
     </div>
-
   </div>
-
 </nav>
