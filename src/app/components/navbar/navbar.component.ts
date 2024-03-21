@@ -24,7 +24,7 @@ export class NavbarComponent implements OnInit {
     private _AuthService: AuthService,
     private _Router: Router,
     private _Renderer2: Renderer2,
-    private _EcomdataService: EcomdataService
+    private _EcomdataService: EcomdataService,
   ) {
 
     effect(()=>{
@@ -121,6 +121,16 @@ export class NavbarComponent implements OnInit {
     } else {
       this._Renderer2.removeClass(this.navbar.nativeElement, 'px-5');
       this._Renderer2.removeClass(this.navbar.nativeElement, 'py-3');
+    }
+  }
+
+  @HostListener('document:click', ['$event'])
+  onClick(event: MouseEvent) {
+    const navbar = document.querySelector('.navbar-collapse');
+    if (navbar && !navbar.contains(event.target as Node)) {
+      console.log(!navbar.contains(event.target as Node) + " : " + "event.target");
+
+      this._Renderer2.removeClass(navbar, 'show');
     }
   }
 

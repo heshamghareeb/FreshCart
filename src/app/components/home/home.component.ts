@@ -37,7 +37,6 @@ export class HomeComponent implements OnInit {
     this._EcomdataService.whishList.subscribe((data) => {
       if (data.length > 0) {
         this.whishList = data;
-        console.log(this.whishList,'wh');
       }
     });
   }

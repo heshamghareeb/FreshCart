@@ -17,6 +17,7 @@
     >
       <span class="navbar-toggler-icon"></span>
     </button>
+    
     <div class="collapse navbar-collapse" id="collapsibleNavId">
       <ul class="navbar-nav me-auto mt-2 mt-lg-0">
         <li class="nav-item">
@@ -53,17 +54,19 @@
         </li>
       </ul>
 
-      <ul class="navbar-nav ms-auto mt-2 mt-lg-0">
+      <ul class="navbar-nav ms-auto mt-2 mt-lg-0 ">
 
-        <li class="nav-item me-4 hstack">
+        <li class="nav-item me-3 hstack">
           <a routerLink="/whishlist" class="text-main number-item">
             <i class="fas fa-heart fa-2x"></i>
             <!-- <span *ngIf="whishItemNumber"> {{ whishItemNumber }} </span> -->
-            <span *ngIf="whishItemNumberS"> {{ whishItemNumberS }} </span>
+            <span class="text-white" *ngIf="whishItemNumberS"> {{ whishItemNumberS }} </span>
           </a>
         </li>
 
-        <li class="nav-item me-2">
+
+
+        <!-- <li class="nav-item me-2">
           <div class="dropdown">
             <button
               class="dropdown-toggle"
@@ -74,14 +77,14 @@
               <i class="fas fa-user text-success"></i>
             </button>
             <ul class="dropdown-menu">
-              <!-- <li>
+              <li>
                 <a
                   class="dropdown-item small"
                   routerLinkActive="active-link"
                   routerLink="/forgot"
                   >Forgot Password</a
                 >
-              </li> -->
+              </li>
               <li>
                 <a
                   class="dropdown-item small"
@@ -90,7 +93,7 @@
                   >Update password</a
                 >
               </li>
-              <!-- <li>
+              <li>
                 <a
                   class="dropdown-item small"
                   routerLinkActive="active-link"
@@ -105,10 +108,10 @@
                   routerLink="/allorders"
                   >My Orders</a
                 >
-              </li> -->
+              </li>
             </ul>
           </div>
-        </li>
+        </li> -->
 
         <!-- <li class="nav-item me-4 hstack">
           <a class="nav-link position-relative" routerLink="/cart">
@@ -119,7 +122,7 @@
           </a>
         </li> -->
 
-        <li class="nav-item me-4 hstack">
+        <li class="nav-item me-3 hstack">
           <a class="nav-link position-relative" routerLink="/cart" >
             <i class="fas fa-cart-shopping fa-2x text-main"></i>
             <span class="badge bg-info position-absolute top-0 end-0">
@@ -144,6 +147,7 @@
             ><i class="fab fa-whatsapp text-main h4"></i
           ></a>
         </li>
+
         <li class="nav-item">
           <span (click)="logOut()" class="nav-link h5" role="button">SignOut</span>
         </li>

@@ -36,8 +36,12 @@ const routes: Routes = [
 
   //blank
   {
-    canActivate: [authGuard],path: '',loadComponent: () =>
-      import('./layouts/blank/blank.component').then((m) => m.BlankComponent),
+    path: '',
+    canActivate: [authGuard],
+    loadComponent: () =>
+      import('./layouts/blank/blank.component').then(
+        (m) => m.BlankComponent
+        ),
     children: [
       { path: '', redirectTo: 'home', pathMatch: 'full' },
       {
@@ -153,7 +157,7 @@ const routes: Routes = [
     ],
   },
 
-  //notfound  
+  //notfound
   {
     path: '**',
     loadComponent: () =>
