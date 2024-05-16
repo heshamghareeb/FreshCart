@@ -10,6 +10,7 @@ const routes: Routes = [
     loadComponent: () =>
       import('./layouts/auth/auth.component').then((m) => m.AuthComponent),
     children: [
+      { path: '', redirectTo: 'login', pathMatch: 'full' },
       {
         path: 'login',
         loadComponent: () =>

@@ -4,6 +4,7 @@
   "newProjectRoot": "projects",
   "projects": {
     "Fresh-Cart": {
+
       "projectType": "application",
       "schematics": {
         "@schematics/angular:component": {
@@ -18,6 +19,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
+
             "outputPath": "dist/fresh-cart",
             "index": "src/index.html",
             "main": "src/main.ts",
@@ -35,10 +37,14 @@
               "node_modules/ngx-owl-carousel-o/lib/styles/prebuilt-themes/owl.carousel.min.css",
               "node_modules/ngx-owl-carousel-o/lib/styles/prebuilt-themes/owl.theme.default.min.css",
               "./node_modules/@fortawesome/fontawesome-free/css/all.min.css",
-              "./node_modules/bootstrap/dist/css/bootstrap.min.css",
-              "src/styles.scss"
+              "./node_modules/@fortawesome/fontawesome-free/scss/fontawesome.scss",
+              "./node_modules/bootstrap/scss/bootstrap.scss",
+              "src/styles.scss",
+              "src/styles-en.scss",
+              "src/styles-ar.scss"
             ],
             "scripts": [
+              "./node_modules/@popperjs/core/dist/umd/popper.min.js",
               "./node_modules/bootstrap/dist/js/bootstrap.bundle.min.js"
             ]
           },

@@ -5,16 +5,21 @@ import { Category } from 'src/app/common/interfaces/category';
 import { Product } from 'src/app/common/interfaces/product';
 import { EcomdataService } from 'src/app/common/services/ecomdata.service';
 import { CardComponent } from '../card/card.component';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
+
 
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [CommonModule, CarouselModule, CardComponent],
+  imports: [CommonModule, CarouselModule, CardComponent, TranslateModule],
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.scss'],
 })
 export class HomeComponent implements OnInit {
-  constructor(private _EcomdataService: EcomdataService) {}
+  constructor(private _EcomdataService: EcomdataService, private translate: TranslateService) {
+    translate.setDefaultLang('en');
+    translate.use('en');
+  }
 
   products: Product[] = [];
   categories!: Category[];
@@ -52,9 +57,11 @@ export class HomeComponent implements OnInit {
     navText: ['', ''],
     items: 1,
     nav: true,
+    rtl:true
   };
 
   categoriesSlider: OwlOptions = {
+    rtl:true,
     loop: true,
     mouseDrag: true,
     touchDrag: true,
