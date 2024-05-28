@@ -1,4 +1,34 @@
 {
   "DIR": "rtl",
-  "HELLO": "السلام عليكم"
+  "Popular Categories": "الفئات الأكثر شعبية",
+  "Popular Products": "المنتجات الأكثر شعبية",
+  "SignOut": "تسجيل الخروج",
+  "Home": "الصفحة الرئيسية",
+  "Products": "المنتجات",
+  "Brands": "البراندات",
+  "Categories": "الفئات",
+
+  "Music": "الموسيقى",
+  "Men's Fashion": "أزياء الرجال",
+  "Women's Fashion": "أزياء النساء",
+  "SuperMarket": "ماركت",
+  "Baby & Toys": "الأطفال و ألعاب",
+  "Furniture": "الأثاث",
+  "Books": "الكتب",
+  "Beauty & Health": "الجمال والصحة",
+  "Mobiles": "الهواتف",
+  "Electronics": "أجهزة إلكترونيه",
+  "Get The FreshCart App": "احصل على تطبيق FreshCart",
+  "We Will Send You a Link,open it on Your Phone": "سنرسل لك رابطًا، افتحه على هاتفك",
+  "Share App Link": "مشاركة رابط التطبيق",
+  "Copy successfully": "تم النسخ بنجاح",
+  "Add To Cart":"اضافة الى السلة",
+  "Shop Cart":"عربة التسوق",
+  "Clear Cart":"مسح عربة التسوق",
+  "Total Price":"اجمالى السعر",
+  "Price":"السعر",
+  "Remove":"مسح",
+  "Online Payment":"الدفع الالكتروني"
 }
+
+

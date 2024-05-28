@@ -10,34 +10,20 @@ import { Product } from '../interfaces/product';
   providedIn: 'root',
 })
 export class EcomdataService {
+
   constructor(
     private _HttpClient: HttpClient,
     private _ToastrService: ToastrService
   ) {}
 
-  // cartNumber: BehaviorSubject<number> = new BehaviorSubject(0);
   cartNumberSignal = signal<number>(0);
-  // whishNumber: BehaviorSubject<number> = new BehaviorSubject(0);
+
+  wishList: BehaviorSubject<any> = new BehaviorSubject([]);
   whishNumberSignal = signal<number>(0);
-  whishListSignal = signal<[]>([]);
-  whishList: BehaviorSubject<any> = new BehaviorSubject([]);
+
   products: Product[] = [];
 
-  updateWhishSignal(whishList:[]){
-    // console.log(num);
-    this.whishListSignal.update(() => whishList);
-  }
 
-  updateWhishNumberSignal(num:number){
-    this.whishNumberSignal.update(() => num);
-  }
-
-  updateCartNumberSignal(num:number){
-    // console.log(num);
-    this.cartNumberSignal.update(() => num);
-    // console.log(this.cartNumberSignal());
-    // console.log("this.cartNumberSignal() service");
-  }
 
   getUserOrders(userId: string): Observable<any> {
     return this._HttpClient.get(
@@ -45,16 +31,20 @@ export class EcomdataService {
     );
   }
 
-  addToCart(id: string): void {
+
+    addToCart(id: string): void {
     this.sendToCart(id).subscribe({
       next: (response) => {
         if (response.status === 'success') {
           this._ToastrService.success(response.message);
-          // this.cartNumber.next(response.numOfCartItems);
           this.updateCartNumberSignal(response.numOfCartItems)
         }
       },
     });
+  }
+
+  updateCartNumberSignal(num:number){
+    this.cartNumberSignal.update(() => num);
   }
 
   SetcheckOut(userId: string | null, userDetails: Object): Observable<any> {
@@ -123,6 +113,10 @@ export class EcomdataService {
     return this._HttpClient.get(environment.baseUrlData + `/brands/${id}`);
   }
 
+
+
+
+///Wish List Information
   setWishlist(id: string): Observable<any> {
     return this._HttpClient.post(environment.baseUrlData + `/wishlist`, {
       productId: id,
@@ -133,9 +127,31 @@ export class EcomdataService {
     return this._HttpClient.delete(environment.baseUrlData + `/wishlist/${id}`);
   }
 
+
+
+
   getWishlist(): Observable<any> {
     return this._HttpClient.get(environment.baseUrlData + `/wishlist`);
   }
+
+
+
+  updateWishlistItem(item: any) {
+
+    this.wishList.next(item);
+  }
+
+
+
+  updateWhishNumberSignal(num:number){
+    this.whishNumberSignal.update(() => num);
+  }
+
+
+
+
+
+
 
   setAddresses(data: object): Observable<any> {
     return this._HttpClient.post(environment.baseUrlData + `/addresses`, data);

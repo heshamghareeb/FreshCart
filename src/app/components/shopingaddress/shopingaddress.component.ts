@@ -62,11 +62,11 @@ export class ShopingaddressComponent implements OnInit {
             if (response.status === 'success') {
               this.isLoading = false;
               window.open(response.session.url, '_blank');
-              console.log(response);
+
             }
           },
           error: (err) => {
-            console.log(err);
+
             this.errMsg = err?.error?.message;
             this.isLoading = false;
           },

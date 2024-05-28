@@ -1,6 +1,9 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { authGuard, authGuardLogin } from './common/gurads/auth.guard';
+import { HomeComponent } from './components/home/home.component';
+import { BlankComponent } from './layouts/blank/blank.component';
+import { PaymentComponent } from './components/payment/payment.component';
 
 const routes: Routes = [
   //auth
@@ -67,6 +70,7 @@ const routes: Routes = [
             './components/details/details.component'
           ).then((m) => m.DetailsComponent),
       },
+
       //Brands
       {
         path: 'brands',
@@ -84,6 +88,7 @@ const routes: Routes = [
           ),
         title: 'Brands',
       },
+
       //Whishlist
       {
         path: 'whishlist',
@@ -92,6 +97,7 @@ const routes: Routes = [
             (m) => m.WhishlistComponent
           ),
       },
+
       //Categories
       {
         path: 'categories',
@@ -109,6 +115,7 @@ const routes: Routes = [
           ),
         title: 'Category Details',
       },
+
       //Cart
       {
         path: 'cart',
@@ -118,14 +125,16 @@ const routes: Routes = [
           ),
         title: 'Cart',
       },
-      //Payment
+
+
+      // Payment
       {
         path: 'payment/:id',
         loadComponent: () =>
           import('./components/payment/payment.component').then(
             (m) => m.PaymentComponent
           ),
-        title: 'Payment',
+        // title: 'Payment',
       },
 
 
@@ -143,6 +152,8 @@ const routes: Routes = [
             (m) => m.UpdatepassComponent
           ),
       },
+
+      //profile
       {
         path: 'profile',
         loadComponent: () =>
@@ -150,10 +161,6 @@ const routes: Routes = [
             (m) => m.ProfileComponent
           ),
       },
-
-
-
-
 
     ],
   },

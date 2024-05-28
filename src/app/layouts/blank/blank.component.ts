@@ -23,7 +23,7 @@ import { NgxSpinnerModule } from 'ngx-spinner';
   ],
   templateUrl: './blank.component.html',
   styleUrls: ['./blank.component.scss'],
-  schemas: [CUSTOM_ELEMENTS_SCHEMA],
+  // schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
 export class BlankComponent {
   constructor(private _Renderer2: Renderer2) {}

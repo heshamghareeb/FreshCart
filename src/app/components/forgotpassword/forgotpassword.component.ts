@@ -87,10 +87,9 @@ export class ForgotpasswordComponent implements OnInit {
   handleForgotPassword(): void {
     this.isLoading = true;
     if (this.forgotForm.valid) {
-      console.log(this.forgotForm.value);
+
       this._AuthService.setForgotPassword(this.forgotForm.value).subscribe({
         next: (response) => {
-          console.log(response);
           if (response.statusMsg === 'success') {
             this.errMsg = response.message;
             this.isLoading = false;
@@ -102,7 +101,6 @@ export class ForgotpasswordComponent implements OnInit {
           }
         },
         error: (err) => {
-          console.log(err);
           this.errMsg = err.error.message;
           this.isLoading = false;
         },
@@ -113,10 +111,10 @@ export class ForgotpasswordComponent implements OnInit {
   handleVerifyResetCode(): void {
     this.isLoading = true;
     if (this.verifyCode.valid) {
-      console.log(this.verifyCode.value);
+
       this._AuthService.setVerifyResetCode(this.verifyCode.value).subscribe({
         next: (response) => {
-          console.log(response);
+
           if (response.status === 'Success') {
             this.errMsg = response.status;
             this.isLoading = false;
@@ -128,7 +126,7 @@ export class ForgotpasswordComponent implements OnInit {
           }
         },
         error: (err) => {
-          console.log(err);
+
           this.errMsg = err.error.message;
           this.isLoading = false;
         },
@@ -139,14 +137,14 @@ export class ForgotpasswordComponent implements OnInit {
   handleResetPassword(): void {
     this.isLoading = true;
     if (this.resetPassword.valid) {
-      console.log(this.resetPassword.value);
+
       const userData = {
         email: this.email,
         newPassword: this.resetPassword.get('newPassword')?.value,
       };
       this._AuthService.resetPassword(userData).subscribe({
         next: (response) => {
-          console.log(response);
+
           if (response?.token) {
             this.errMsg = response.message;
             localStorage.setItem('_token', response?.token);
@@ -159,7 +157,7 @@ export class ForgotpasswordComponent implements OnInit {
           }
         },
         error: (err) => {
-          console.log(err);
+
           this.errMsg = err.error.message;
           this.isLoading = false;
         },

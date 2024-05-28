@@ -13,6 +13,7 @@ import { Product } from 'src/app/common/interfaces/product';
 import { CuttextPipe } from 'src/app/common/pipes/cuttext.pipe';
 import { EcomdataService } from 'src/app/common/services/ecomdata.service';
 import { CardComponent } from '../card/card.component';
+import { CartService } from 'src/app/common/services/cart.service';
 
 @Component({
   selector: 'app-products-by',
@@ -28,17 +29,27 @@ export class ProductsByComponent implements OnInit{
   constructor(
     private _ActivatedRoute: ActivatedRoute,
     private _EcomdataService: EcomdataService,
+    private _CartService: CartService,
+
   ) {}
   ngOnInit(): void {
     this._EcomdataService.getProducts().subscribe({
       next: (response) => {
+
         this._EcomdataService.products = response.data;
       },
     });
 
-    this.whishList = this._EcomdataService.whishListSignal();
+    this._EcomdataService.wishList.subscribe((data) => {
 
-    // console.log(,'this._ActivatedRoute.url');
+      if (data.length > 0) {
+        this.whishList = data;
+      }
+    });
+
+
+
+
 
     this._ActivatedRoute.paramMap.subscribe({
       next: (params) => {
@@ -72,10 +83,10 @@ export class ProductsByComponent implements OnInit{
   products:Product[] = [];
 
 
-  whishList: any;
+  whishList: any = [];
 
   addToCart(id: string): void {
-    this._EcomdataService.addToCart(id);
+    this._CartService.addToCart(id);
   }
 
 }

@@ -2,11 +2,12 @@ import { Component, OnInit, Renderer2 } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { CartService } from 'src/app/common/services/cart.service';
 import { RouterLink } from '@angular/router';
+import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-cart',
   standalone: true,
-  imports: [CommonModule, RouterLink],
+  imports: [CommonModule, RouterLink, TranslateModule],
   templateUrl: './cart.component.html',
   styleUrls: ['./cart.component.scss'],
 })
@@ -15,13 +16,17 @@ export class CartComponent implements OnInit {
     private _CartService: CartService,
     private _Renderer2: Renderer2
   ) {}
-  cartDetails: any = null;
+  cartDetails: any = false;
 
   ngOnInit(): void {
     this._CartService.getCartUser().subscribe({
       next: (response) => {
-        console.log('getcart', response);
-        this.cartDetails = response.data;
+
+        this.cartDetails = response;
+
+      },
+      error:(err)=> {
+        this.cartDetails = false
       },
     });
   }
@@ -31,11 +36,15 @@ export class CartComponent implements OnInit {
 
     this._CartService.removeCartItem(id).subscribe({
       next: (response) => {
-        console.log('remove', response);
-        this.cartDetails = response.data;
+
+        this.cartDetails = response;
         this._Renderer2.removeAttribute(element, 'disabled');
 
         this._CartService.cartNumber.next(response.numOfCartItems);
+
+
+        this._CartService.updateCartNumberSignal(response.numOfCartItems);
+  
       },
       error: (err) => {
         this._Renderer2.removeAttribute(element, 'disabled');
@@ -56,7 +65,7 @@ export class CartComponent implements OnInit {
 
       this._CartService.updateCartCount(id, count).subscribe({
         next: (response) => {
-          this.cartDetails = response.data;
+          this.cartDetails = response;
           this._Renderer2.removeAttribute(el1, 'disabled');
           this._Renderer2.removeAttribute(el2, 'disabled');
         },
@@ -72,8 +81,9 @@ export class CartComponent implements OnInit {
     this._CartService.clearCart().subscribe({
       next: (response) => {
         if (response.message === 'success') {
-          this.cartDetails = null;
+          this.cartDetails = false;
           this._CartService.cartNumber.next(0);
+          this._CartService.updateCartNumberSignal(0);
         }
       },
     });

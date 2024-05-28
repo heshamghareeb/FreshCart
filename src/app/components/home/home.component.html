@@ -45,24 +45,28 @@
 </section>
 
 <section class="my-4 categories" *ngIf="categories">
-  <!-- <h2 >{{"Shop Popular Categories"| translate}}</h2> -->
-  <h2 >{{"Shop Popular Categories"| translate}}</h2>
-  <owl-carousel-o [options]="categoriesSlider">
+  <h2 class="">{{"Popular Categories"| translate}}</h2>
+  <!-- <i class="fas fa-cart-shopping fa-2x text-main d-inline"></i> -->
+
+<div class="pt-2">
+  <owl-carousel-o  [options]="categoriesSlider" >
     <ng-container *ngFor="let category of categories">
-      <ng-template carouselSlide>
+      <ng-template  carouselSlide>
         <img
           loading="lazy"
           [src]="category.image"
           [alt]="category.name"
           [title]="category.name"
         />
-        <h3 i18n class="h6 text-main">{{ category.name }}</h3>
+        <h3 i18n class="h6 text-main">{{ category.name | translate}}</h3>
       </ng-template>
     </ng-container>
   </owl-carousel-o>
+</div>
 </section>
 
 <section>
+  <h2 class="">{{"Popular Products"| translate}}</h2>
   <div
     class="row justify-content-center row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 row-cols-xl-5 g-4"
   >
@@ -71,7 +75,7 @@
       class="col"
       [cutTextNum]="2"
       [product]="product"
-      [whish]="whishList"
+      [wish]="whishList "
     ></app-card>
   </div>
 </section>

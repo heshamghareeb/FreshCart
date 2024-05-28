@@ -31,13 +31,13 @@ export class DetailsComponent implements OnInit {
     this._ActivatedRoute.paramMap.subscribe({
       next: (params) => {
         this.productId = params.get('id');
-        // console.log(this.productId);
+
       },
     });
 
     this._ProductService.getProductDetails(this.productId).subscribe({
       next: ({ data }) => {
-        // console.log(data);
+
         this.productDetails = data;
       },
     });
@@ -48,8 +48,7 @@ export class DetailsComponent implements OnInit {
 
     this._CartService.addToCart(id).subscribe({
       next: (response) => {
-        console.log(response);
-        console.log(response.message);
+
         this._ToastrService.success(response.message);
         this._Renderer2.removeAttribute(element, 'disabled');
 

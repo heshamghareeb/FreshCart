@@ -30,7 +30,7 @@ export class RegisterComponent implements OnInit {
   passwordShow: boolean = false;
   rePasswordShow: boolean = false;
   registerForm!: FormGroup;
-  // errMsg: string = '';
+
   isLoading: boolean = false;
 
   ngOnInit(): void {
@@ -85,7 +85,7 @@ export class RegisterComponent implements OnInit {
         },
         error: (err) => {
           this.isLoading = false;
-          // this.errMsg = err.error.message;
+
           this.toastr.error(err.error.message, 'Error', {'progressBar':true,});
         },
       });

@@ -70,7 +70,7 @@ export class UpdatepassComponent implements OnInit {
         next: (response) => {
           if (response.message === 'success') {
             this.isLoading = false;
-            console.log(response);
+          
             localStorage.setItem('_token', response.token);
             this.updateForm.reset();
             this.errMsg = response.message;

@@ -1,6 +1,6 @@
 <nav
   #navbar
-  class="navbar shadow-sm navbar-expand-lg fixed-top navbar-light bg-light"
+  class="navbar shadow-sm navbar-expand-lg fixed-top navbar-light bg-light px-5"
 >
   <div class="container-fluid">
     <a class="navbar-brand" routerLink="/">
@@ -19,11 +19,9 @@
     </button>
 
     <div class="collapse navbar-collapse" id="collapsibleNavId">
-      <ul class="navbar-nav me-auto mt-2 mt-lg-0">
+      <ul class="navbar-nav mt-2 mt-lg-0" [ngClass]="{'me-auto':translate.currentLang === 'en', 'ms-auto':translate.currentLang === 'ar'}">
         <li class="nav-item">
-          <a class="nav-link" routerLinkActive="active-link" routerLink="/home"
-            >Home</a
-          >
+          <a class="nav-link" routerLinkActive="active-link" routerLink="/home">{{"Home"| translate}}</a>
         </li>
 
         <li class="nav-item">
@@ -31,7 +29,7 @@
             class="nav-link"
             routerLinkActive="active-link"
             routerLink="/products"
-            >Products</a
+            >{{"Products"| translate}}</a
           >
         </li>
 
@@ -40,7 +38,7 @@
             class="nav-link"
             routerLinkActive="active-link"
             routerLink="/brands"
-            >Brands</a
+            >{{"Brands"| translate}}</a
           >
         </li>
 
@@ -49,12 +47,12 @@
             class="nav-link"
             routerLinkActive="active-link"
             routerLink="/categories"
-            >Categories</a
+            >{{"Categories"| translate}}</a
           >
         </li>
       </ul>
 
-      <ul class="navbar-nav ms-auto mt-2 mt-lg-0 navbar-icons">
+      <ul class="navbar-nav mt-2 mt-lg-0 navbar-icons " [ngClass]="{'ms-auto':translate.currentLang === 'en', 'me-auto':translate.currentLang === 'ar'}">
 
         <li class="nav-item me-3 hstack">
           <a routerLink="/whishlist" class="text-main number-item">
@@ -124,33 +122,70 @@
 
         <li class="nav-item me-3 hstack">
           <a class="nav-link position-relative" routerLink="/cart" >
-            <i class="fas fa-cart-shopping fa-2x text-main"></i>
-            <span class="badge bg-info position-absolute top-0 end-0">
+            <i class="fas fa-cart-shopping fa-2xl text-main"  [ngClass]="
+            {'fa-flip-horizontal':translate.currentLang === 'ar'}"></i>
+            <!-- <img class="flag-icon text-main" src="../../../assets/images/cart.svg" alt=""> -->
+            <span class="badge bg-info position-absolute top-0 end-0" [ngClass]="
+            {'end-0':translate.currentLang === 'en',
+            'start-0':translate.currentLang === 'ar'}">
               {{ cartItemNumberS }}
             </span>
             <!-- <span *ngIf="cartItemNumberS"> {{ cartItemNumberS }} </span> -->
           </a>
         </li>
 
-        <li class="nav-item d-flex align-items-center gap-3 me-4">
-          <a
+        <li class="nav-item dropdown pe-2" ngbDropdown>
+          <a class="nav-link  text-main" id="navbarScrollingDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false" ngbDropdownToggle>
+            <i class="fa-solid fa-bars nav-icons"></i>
+          </a>
+          <ul class="dropdown-menu dropstart"  ngbDropdownMenu aria-labelledby="navbarScrollingDropdown">
+            <li (click)="changeLangage('en')" *ngIf="translate.currentLang == 'ar'" ngbDropdownItem class="p-2">
+              <span class="">
+                <span>EN</span>
+                <img class="p-1 flag-icon" src="../../../assets/images/united-states.png" alt="">
+            </span>
+            </li>
+
+            <li (click)="changeLangage('ar')" *ngIf="translate.currentLang == 'en'" ngbDropdownItem class="p-2">
+              <span class="">
+                <img class="p-1 flag-icon" src="../../../assets/images/flag.png" alt="">
+                <span>AR</span>
+            </span>
+            </li>
+
+            <li ngbDropdownItem>
+              <a
             href="https://www.facebook.com/HxBoss"
             target="_blank"
             class="text-reset"
             style="color: #4267B2 !important;"
             ><i class="fab fa-facebook h4" ></i>
           </a>
-          <a
-            target="_blank"
-            href="https://api.whatsapp.com/send?phone=01119244463"
-            class="text-reset"
-            ><i class="fab fa-whatsapp text-main h4"></i
-          ></a>
+            </li>
+            <li ngbDropdownItem>
+              <a
+              target="_blank"
+              href="https://api.whatsapp.com/send?phone=01119244463"
+              class="text-reset">
+              <i class="fab fa-whatsapp text-main h4"></i>
+            </a>
+            </li>
+            <!-- <li ngbDropdownItem><hr class="dropdown-divider"></li>
+            <li ngbDropdownItem><a class="dropdown-item" href="#">Something else here</a></li> -->
+
+            <li class="nav-item ms-auto align-content-center ">
+              <span (click)="logOut()" class="nav-link h6" role="button">{{"SignOut"| translate}}</span>
+            </li>
+          </ul>
         </li>
 
-        <li class="nav-item ms-auto">
-          <span (click)="logOut()" class="nav-link h5" role="button">SignOut</span>
-        </li>
+
+        <!-- <li class="nav-item ms-auto align-content-center ">
+          <span (click)="logOut()" class="nav-link h6" role="button">SignOut</span>
+        </li> -->
+
+
+
       </ul>
     </div>
   </div>

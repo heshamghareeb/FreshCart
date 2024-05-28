@@ -17,6 +17,16 @@ export class PaymentComponent implements OnInit {
     private _CartService: CartService
   ) {}
 
+  ngOnInit(): void {
+
+    this._ActivatedRoute.paramMap.subscribe({
+      next: (params) => {
+        this.cartId = params.get('id');
+
+      },
+    });
+  }
+
   cartId: string | null = '';
 
   orderForm: FormGroup = new FormGroup({
@@ -29,19 +39,13 @@ export class PaymentComponent implements OnInit {
     this._CartService.checkOut(this.cartId, this.orderForm.value).subscribe({
       next: (response) => {
         if (response.status == 'success') {
+          console.log(response,'response handleForm checkOut');
+
           window.open(response.session.url, '_self');
         }
       },
     });
   }
 
-  ngOnInit(): void {
-    this._ActivatedRoute.paramMap.subscribe({
-      next: (params) => {
-        this.cartId = params.get('id');
 
-        console.log(this.cartId);
-      },
-    });
-  }
 }

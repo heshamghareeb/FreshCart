@@ -15,6 +15,8 @@ import { EcomdataService } from 'src/app/common/services/ecomdata.service';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { Inject } from "@angular/core";
 import { DOCUMENT } from "@angular/common";
+import { CartService } from 'src/app/common/services/cart.service';
+
 
 @Component({
   selector: 'app-navbar',
@@ -25,23 +27,28 @@ import { DOCUMENT } from "@angular/common";
 })
 export class NavbarComponent implements OnInit {
   pageDirAR:boolean = false;
-  switchLang(lang: string) {
-    this.translate.use(lang);
-    this.setPageDirection(this.translate.instant('DIR'));
-    this.checkDir();
+
+  constructor(
+    public   translate: TranslateService,
+    private _AuthService: AuthService,
+    private _Router: Router,
+
+    private _EcomdataService: EcomdataService,
+    private _CartService: CartService,
+    @Inject(DOCUMENT) private document: Document,
+    public translateService:TranslateService
+  ) {
+    effect(()=>{
+      this.whishItemNumberS = this._EcomdataService.whishNumberSignal();
+    })
+
+    effect(()=>{
+      this.cartItemNumberS = this._CartService.cartNumberSignal();
+    })
+
   }
-  private setPageDirection(direction: string) {
-    document.documentElement.setAttribute('dir', direction);
-  }
-
-  checkDir(){
-    this.pageDirAR = document.documentElement.getAttribute('dir') == 'rtl';
-    console.log(this.pageDirAR,'this.pageDirAR');
-
-  }
 
 
-    //Make sure to add the import statement to the top of the file
     changeLangage(lang: string) {
       let htmlTag = this.document.getElementsByTagName("html")[0] as HTMLHtmlElement;
     htmlTag.dir = lang === "ar" ? "rtl" : "ltr";
@@ -66,30 +73,8 @@ export class NavbarComponent implements OnInit {
         headTag.appendChild(newLink);
       }
       }
-  constructor(
-    public   translate: TranslateService,
-    private _AuthService: AuthService,
-    private _Router: Router,
-    private _Renderer2: Renderer2,
-    private _EcomdataService: EcomdataService,
-    private elementRef: ElementRef,
-    @Inject(DOCUMENT) private document: Document, public translateService:TranslateService
-  ) {
-    this.checkDir();
-    effect(()=>{
-      this.whishItemNumberS = this._EcomdataService.whishNumberSignal();
-    })
-
-    effect(()=>{
-      this.cartItemNumberS = this._EcomdataService.cartNumberSignal();
-    })
-
-  }
 
 
-
-  // cartItemNumber: number = 0;
-  // whishItemNumber: number = 0;
   whishItemNumberS:number = 0;
   cartItemNumberS:number = 0;
   userName: string = '';
@@ -107,43 +92,29 @@ export class NavbarComponent implements OnInit {
       },
     });
 
-    if (!this._Router.url.includes('cart')) {
-      this._EcomdataService.getCartData().subscribe({
+    if (this._Router.url.includes('cart')) {
+      this._CartService.getCartUser().subscribe({
         next: (response) => {
           if (response.status === 'success') {
-            // this._EcomdataService.cartNumber.next(response.numOfCartItems);
-            this._EcomdataService.updateCartNumberSignal(response.numOfCartItems);
-            this.cartItemNumberS = this._EcomdataService.cartNumberSignal();
+
+            this._CartService.updateCartNumberSignal(response.numOfCartItems);
+            this.cartItemNumberS = this._CartService.cartNumberSignal();
           }
         },
         error: (err) => {
-          console.log('Error Cart Nav', err.error.message);
         },
       });
     }
 
-    // this._EcomdataService.cartNumber.subscribe({
-    //   next: (data) => {
-    //     this.cartItemNumber = data;
-    //   },
-    // });
-
     if (!this._Router.url.includes('whishlist')) {
-      // console.log('1',!this._Router.url.includes('whishlist'));
-      // console.log('2',this._Router.url.includes('whishlist'));
 
       this._EcomdataService.getWishlist().subscribe({
         next: (response) => {
           if (response.status === 'success') {
             const whishList = response.data.map((item: any) => item._id);
-
-            this._EcomdataService.whishList.next(whishList);
-
-            // this._EcomdataService.whishNumber.next(response.data.length);
-
             this._EcomdataService.updateWhishNumberSignal(response.data.length);
 
-          this._EcomdataService.updateWhishSignal(whishList)
+            this._EcomdataService.updateWishlistItem(whishList)
 
             this.whishItemNumberS = this._EcomdataService.whishNumberSignal();
           }
@@ -151,39 +122,13 @@ export class NavbarComponent implements OnInit {
       });
     }
 
-    // this._EcomdataService.whishNumber.subscribe({
-    //   next: (data) => {
-    //     this.whishItemNumber = data;
-
-    //   },
-    // });
 
 
 
   }
 
 
-  // @ViewChild('navbar') navbar!: ElementRef;
 
-  // @HostListener('window:scroll')
-  // onScroll(): void {
-  //   if (scrollY > 200) {
-  //     this._Renderer2.addClass(this.navbar.nativeElement, 'px-5');
-  //     this._Renderer2.addClass(this.navbar.nativeElement, 'py-3');
-  //   } else {
-  //     this._Renderer2.removeClass(this.navbar.nativeElement, 'px-5');
-  //     this._Renderer2.removeClass(this.navbar.nativeElement, 'py-3');
-  //   }
-  // }
-
-  // @HostListener('document:click', ['$event'])
-  // onClick(event: MouseEvent) {
-  //   const navbarToggler = document.querySelector('.navbar-toggler');
-  //   const navbarCollapse = document.querySelector('.navbar-collapse');
-  //   if (navbarToggler && !navbarToggler.classList.contains('collapsed') && navbarCollapse) {
-  //     navbarToggler.dispatchEvent(new Event('click'));
-  //   }
-  // }
 
   logOut(): void {
     localStorage.removeItem('_token');

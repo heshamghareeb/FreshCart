@@ -1,19 +1,18 @@
-<section
+<section *ngIf="cartDetails; else msg"
   class="w-75 mx-auto rounded shadow bg-main-light p-3 mb-3"
-  *ngIf="cartDetails; else msg"
 >
   <div class="d-flex justify-content-between align-items-center">
-    <h1 class="h2">Shop Cart</h1>
+    <h1 class="h2">{{"Shop Cart" | translate}}</h1>
     <button (click)="clear()" class="btn btn-sm btn-outline-danger">
-      Clear Cart
+      {{"Clear Cart" | translate}}
     </button>
   </div>
 
-  <p class="text-main">
-    Total Price: {{ cartDetails.totalCartPrice | currency : "EGP " }}
+  <p class="text-main end-0" >
+    {{"Total Price" | translate}}: {{ cartDetails.totalCartPrice | currency : "EGP " }}
   </p>
 
-  <div class="row border-bottom py-2" *ngFor="let item of cartDetails.products">
+  <div class="row border-bottom py-2" *ngFor="let item of cartDetails.data.products">
     <div class="col-md-1">
       <img
         class="w-100"
@@ -26,14 +25,14 @@
       <div>
         <h3 class="h6">{{ item.product.title }}</h3>
         <p class="text-main small mb-0">
-          Price: {{ item.price | currency : "EGP " }}
+          {{"Price" | translate}}: {{ item.price | currency : "EGP " }}
         </p>
         <button
           #btnRemove
           (click)="removeItem(item.product._id, btnRemove)"
-          class="btn m-0 p-0 text-main"
-        >
-          <i class="fas fa-trash-can"></i> Remove
+          class="btn m-0 p-0 text-main">
+          <i class="fas fa-trash-can"></i>
+          {{"Remove" | translate}}
         </button>
       </div>
 
@@ -59,8 +58,9 @@
     </div>
   </div>
 
-  <button [routerLink]="['/payment', cartDetails._id]" class="main-btn mt-3">
-    Online Payment <img src="./assets/images/visa.svg" alt="visa logo" />
+  <button [routerLink]="['/payment', cartDetails.data._id]" class="main-btn mt-3">
+    {{"Online Payment" | translate}}
+    <img src="./assets/images/visa.svg" alt="visa logo" />
   </button>
 </section>
 

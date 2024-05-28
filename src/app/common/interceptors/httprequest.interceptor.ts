@@ -36,7 +36,6 @@ export class HttpRequestInterceptor implements HttpInterceptor {
           });
         }
       } catch (error: any) {
-        // console.log('error', error);
         if (error.message.includes('Invalid token')) {
           localStorage.removeItem('_token');
           this._Router.navigate(['/login']);
@@ -54,7 +53,7 @@ export class HttpRequestInterceptor implements HttpInterceptor {
         error => {
           // Handle error response here
           if (error.statusText == 'Unauthorized') {
-            console.log(error.statusText == 'Unauthorized','Unauthorized');
+            // console.log(error.statusText == 'Unauthorized','Unauthorized');
             // localStorage.removeItem('_token');
             // this._Router.navigate(['/login']);
           }

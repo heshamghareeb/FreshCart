@@ -3,7 +3,15 @@
 
     <div class="ptorcut-area position-relative">
       <span
-        *ngIf="!whish.includes(product._id)"
+      *ngIf="wish.includes(product._id)"
+      (click)="removeFromWhish(product._id)"
+      role="button"
+      class="heart"
+    >
+      <i class="fa-solid fa-heart-crack"></i>
+    </span>
+      <span
+        *ngIf="!wish.includes(product._id)"
         (click)="addToWhish(product._id)"
         role="button"
         class="heart"
@@ -11,14 +19,7 @@
         <i class="fas fa-heart"></i>
       </span>
 
-      <span
-        *ngIf="whish.includes(product._id)"
-        (click)="removeFromWhish(product._id)"
-        role="button"
-        class="heart"
-      >
-        <i class="fa-solid fa-heart-crack"></i>
-      </span>
+
 
       <header role="button" [routerLink]="['/productdetails', product._id]">
         <img
@@ -28,7 +29,7 @@
           [alt]="product.title"
         />
 
-        <h4 il8n class="h6 font-sm text-main">{{ product.category.name }}</h4>
+        <h4 il8n class="h6 font-sm text-main">{{ product.category.name | translate}}</h4>
         <h3 class="h6 small">{{ product.title | cuttext : cutTextNum }}</h3>
       </header>
 

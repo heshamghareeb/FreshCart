@@ -7,11 +7,12 @@ import { CuttextPipe } from 'src/app/common/pipes/cuttext.pipe';
 import { ToastrService } from 'ngx-toastr';
 import { CartService } from 'src/app/common/services/cart.service';
 import { NgxPaginationModule } from 'ngx-pagination';
+import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-products',
   standalone: true,
-  imports: [CommonModule, RouterLink, CuttextPipe, NgxPaginationModule],
+  imports: [CommonModule, RouterLink, CuttextPipe, NgxPaginationModule, TranslateModule],
   templateUrl: './products.component.html',
   styleUrls: ['./products.component.scss'],
 })
@@ -31,7 +32,7 @@ export class ProductsComponent implements OnInit {
   ngOnInit(): void {
     this._ProductService.getProducts().subscribe({
       next: (response) => {
-        console.log('products', response);
+
         this.products = response.data;
         this.pageSize = response.metadata.limit;
         this.curentPage = response.metadata.currentPage;
@@ -46,8 +47,7 @@ export class ProductsComponent implements OnInit {
 
     this._CartService.addToCart(id).subscribe({
       next: (response) => {
-        console.log(response);
-        console.log(response.message);
+
         this._ToastrService.success(response.message);
         this._Renderer2.removeAttribute(element, 'disabled');
 
@@ -60,11 +60,11 @@ export class ProductsComponent implements OnInit {
   }
 
   pageChanged(event: any): void {
-    console.log(event, 'event');
+
 
     this._ProductService.getProducts(event).subscribe({
       next: (response) => {
-        console.log('products', response.data);
+      
         this.products = response.data;
         this.pageSize = response.metadata.limit;
         this.curentPage = response.metadata.currentPage;

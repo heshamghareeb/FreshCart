@@ -24,10 +24,7 @@ export class WhishlistComponent implements OnInit {
     this._EcomdataService.getWishlist().subscribe({
       next: (response) => {
         if (response.status === 'success') {
-          console.log(response);
-
           this.whishList = response.data;
-          // this._EcomdataService.whishNumber.next(response.data.length);
           this._EcomdataService.updateWhishNumberSignal(response.data.length);
         }
       },
@@ -49,12 +46,8 @@ export class WhishlistComponent implements OnInit {
           this.whishList = this.whishList.filter((item) =>
             response.data.includes(item._id)
           );
-
-          // console.log(this.whishList);
-          // this._EcomdataService.whishNumber.next(this.whishList.length);
+          this._EcomdataService.updateWishlistItem(response.data);
           this._EcomdataService.updateWhishNumberSignal(this.whishList.length);
-
-          // this.refresh();
         }
       },
     });
