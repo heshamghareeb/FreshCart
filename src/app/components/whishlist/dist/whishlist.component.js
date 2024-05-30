@@ -10,6 +10,7 @@ exports.WhishlistComponent = void 0;
 var common_1 = require("@angular/common");
 var core_1 = require("@angular/core");
 var router_1 = require("@angular/router");
+var core_2 = require("@ngx-translate/core");
 var ngx_toastr_1 = require("ngx-toastr");
 var cuttext_pipe_1 = require("src/app/common/pipes/cuttext.pipe");
 var WhishlistComponent = /** @class */ (function () {
@@ -62,7 +63,7 @@ var WhishlistComponent = /** @class */ (function () {
         core_1.Component({
             selector: 'app-whishlist',
             standalone: true,
-            imports: [common_1.CommonModule, router_1.RouterLink, cuttext_pipe_1.CuttextPipe, ngx_toastr_1.ToastrModule],
+            imports: [common_1.CommonModule, router_1.RouterLink, cuttext_pipe_1.CuttextPipe, ngx_toastr_1.ToastrModule, core_2.TranslateModule],
             templateUrl: './whishlist.component.html',
             styleUrls: ['./whishlist.component.scss']
         })

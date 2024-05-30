@@ -28,7 +28,11 @@
   "Total Price":"اجمالى السعر",
   "Price":"السعر",
   "Remove":"مسح",
-  "Online Payment":"الدفع الالكتروني"
+  "Online Payment":"الدفع الالكتروني",
+  "Email":"البريد الالكتروني",
+  "All Products":"كل المنتجات",
+  "Your WhishList Is Empty":"قائمة الرغبات الخاصة بك فارغة",
+  "Your Cart Is Empty":"عربة التسوق فارغة"
 }
 
 
