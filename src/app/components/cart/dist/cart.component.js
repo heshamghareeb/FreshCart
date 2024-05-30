@@ -21,6 +21,7 @@ var CartComponent = /** @class */ (function () {
         var _this = this;
         this._CartService.getCartUser().subscribe({
             next: function (response) {
+                console.log(response, 'test1');
                 _this.cartDetails = response;
             },
             error: function (err) {
@@ -34,9 +35,12 @@ var CartComponent = /** @class */ (function () {
         this._CartService.removeCartItem(id).subscribe({
             next: function (response) {
                 _this.cartDetails = response;
+                if (_this.cartDetails.numOfCartItems == 0) {
+                    _this.clear();
+                }
                 _this._Renderer2.removeAttribute(element, 'disabled');
-                _this._CartService.cartNumber.next(response.numOfCartItems);
-                _this._CartService.updateCartNumberSignal(response.numOfCartItems);
+                _this._CartService.cartNumber.next(_this.cartDetails.numOfCartItems);
+                _this._CartService.updateCartNumberSignal(_this.cartDetails.numOfCartItems);
             },
             error: function (err) {
                 _this._Renderer2.removeAttribute(element, 'disabled');

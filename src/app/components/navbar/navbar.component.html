@@ -124,17 +124,15 @@
           <a class="nav-link position-relative" routerLink="/cart" >
             <i class="fas fa-cart-shopping fa-2xl text-main"  [ngClass]="
             {'fa-flip-horizontal':translate.currentLang === 'ar'}"></i>
-            <!-- <img class="flag-icon text-main" src="../../../assets/images/cart.svg" alt=""> -->
             <span class="badge bg-info position-absolute top-0 end-0" [ngClass]="
             {'end-0':translate.currentLang === 'en',
             'start-0':translate.currentLang === 'ar'}">
               {{ cartItemNumberS }}
             </span>
-            <!-- <span *ngIf="cartItemNumberS"> {{ cartItemNumberS }} </span> -->
           </a>
         </li>
 
-        <li class="nav-item dropdown pe-2" ngbDropdown>
+        <li class="nav-item dropdown pe-2 navbardropdown" ngbDropdown>
           <a class="nav-link  text-main" id="navbarScrollingDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false" ngbDropdownToggle>
             <i class="fa-solid fa-bars nav-icons"></i>
           </a>
@@ -142,13 +140,13 @@
             <li (click)="changeLangage('en')" *ngIf="translate.currentLang == 'ar'" ngbDropdownItem class="p-2">
               <span class="">
                 <span>EN</span>
-                <img class="p-1 flag-icon" src="../../../assets/images/united-states.png" alt="">
+                <img class="p-1 flag-icon" src="./assets/images/united-states.png" alt="freshCart" />
             </span>
             </li>
 
             <li (click)="changeLangage('ar')" *ngIf="translate.currentLang == 'en'" ngbDropdownItem class="p-2">
               <span class="">
-                <img class="p-1 flag-icon" src="../../../assets/images/flag.png" alt="">
+                <img class="p-1 flag-icon" src="./assets/images/flag.png" alt="freshCart" />
                 <span>AR</span>
             </span>
             </li>
@@ -180,13 +178,42 @@
         </li>
 
 
-        <!-- <li class="nav-item ms-auto align-content-center ">
-          <span (click)="logOut()" class="nav-link h6" role="button">SignOut</span>
+        <!-- <li class="nav-item me-3 hstack navbar-social-language">
+          <span class="d-block navbar-social-language" (click)="changeLangage('en')" *ngIf="translate.currentLang == 'ar'">
+            <span>EN</span>
+            <img class="p-1 flag-icon" src="./assets/images/united-states.png" alt="freshCart" />
+          </span>
+
+          <span class="d-block navbar-social-language" (click)="changeLangage('ar')" *ngIf="translate.currentLang == 'en'">
+            <img class="p-1 flag-icon" src="./assets/images/flag.png" alt="freshCart" />
+            <span>AR</span>
+          </span>
         </li> -->
 
-
-
       </ul>
+
+
+      <div class="d-flex pt-2 navbar-social-language">
+
+
+          <a
+          href="https://www.facebook.com/HxBoss"
+          target="_blank"
+          class="text-reset me-4 navbar-social-language"
+          style="color: #4267B2 !important;"
+          ><i class="fab fa-2xl fa-facebook" ></i>
+          </a>
+
+          <a
+          target="_blank"
+          href="https://api.whatsapp.com/send?phone=01119244463"
+          class="text-reset navbar-social-language">
+          <i class="fab fa-2xl fa-whatsapp text-main"></i>
+          </a>
+      </div>
+
+      <button  (click)="logOut()" class="nav-link h6 pt-3 navbar-social-language" role="button">{{"SignOut"| translate}}</button>
+
     </div>
   </div>
 </nav>

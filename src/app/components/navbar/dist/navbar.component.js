@@ -17,11 +17,12 @@ var core_2 = require("@ngx-translate/core");
 var core_3 = require("@angular/core");
 var common_2 = require("@angular/common");
 var NavbarComponent = /** @class */ (function () {
-    function NavbarComponent(translate, _AuthService, _Router, _EcomdataService, _CartService, document, translateService) {
+    function NavbarComponent(translate, _AuthService, _Router, _Renderer2, _EcomdataService, _CartService, document, translateService) {
         var _this = this;
         this.translate = translate;
         this._AuthService = _AuthService;
         this._Router = _Router;
+        this._Renderer2 = _Renderer2;
         this._EcomdataService = _EcomdataService;
         this._CartService = _CartService;
         this.document = document;
@@ -111,7 +112,7 @@ var NavbarComponent = /** @class */ (function () {
             templateUrl: './navbar.component.html',
             styleUrls: ['./navbar.component.scss']
         }),
-        __param(5, core_3.Inject(common_2.DOCUMENT))
+        __param(6, core_3.Inject(common_2.DOCUMENT))
     ], NavbarComponent);
     return NavbarComponent;
 }());

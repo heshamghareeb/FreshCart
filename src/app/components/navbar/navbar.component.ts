@@ -26,13 +26,14 @@ import { CartService } from 'src/app/common/services/cart.service';
   styleUrls: ['./navbar.component.scss'],
 })
 export class NavbarComponent implements OnInit {
+  public innerWidth: any;
   pageDirAR:boolean = false;
 
   constructor(
     public   translate: TranslateService,
     private _AuthService: AuthService,
     private _Router: Router,
-
+    private _Renderer2:Renderer2,
     private _EcomdataService: EcomdataService,
     private _CartService: CartService,
     @Inject(DOCUMENT) private document: Document,
@@ -127,12 +128,35 @@ export class NavbarComponent implements OnInit {
 
   }
 
-
-
-
   logOut(): void {
     localStorage.removeItem('_token');
     this._AuthService.userData.next(null);
     this._Router.navigate(['/login']);
   }
+
+
+  // @ViewChild('navbar') navbar!: ElementRef;
+
+  // @HostListener('window:scroll')
+  // onScroll(): void {
+  //   if (scrollY > 200) {
+  //     this._Renderer2.addClass(this.navbar.nativeElement, 'px-5');
+  //     this._Renderer2.addClass(this.navbar.nativeElement, 'py-3');
+  //   } else {
+  //     this._Renderer2.removeClass(this.navbar.nativeElement, 'px-5');
+  //     this._Renderer2.removeClass(this.navbar.nativeElement, 'py-3');
+  //   }
+  // }
+
+  // @HostListener('document:click', ['$event'])
+  // onClick(event: MouseEvent) {
+  //   const navbarToggler = document.querySelector('.navbar-toggler');
+  //   const navbarCollapse = document.querySelector('.navbar-collapse');
+  //   if (navbarToggler && !navbarToggler.classList.contains('collapsed') && navbarCollapse) {
+  //     navbarToggler.dispatchEvent(new Event('click'));
+  //   }
+  // }
+
+
+
 }

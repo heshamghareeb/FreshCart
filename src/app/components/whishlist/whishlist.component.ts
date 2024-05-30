@@ -2,7 +2,9 @@ import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { ToastrModule, ToastrService } from 'ngx-toastr';
+import { CartInterface } from 'src/app/common/interfaces/cart-interface';
 import { CuttextPipe } from 'src/app/common/pipes/cuttext.pipe';
+import { CartService } from 'src/app/common/services/cart.service';
 import { EcomdataService } from 'src/app/common/services/ecomdata.service';
 
 @Component({
@@ -15,6 +17,7 @@ import { EcomdataService } from 'src/app/common/services/ecomdata.service';
 export class WhishlistComponent implements OnInit {
   constructor(
     private _EcomdataService: EcomdataService,
+    private _CartService: CartService,
     private _ToastrService: ToastrService
   ) {}
 
@@ -32,7 +35,16 @@ export class WhishlistComponent implements OnInit {
   }
 
   addToCart(id: string): void {
-    this._EcomdataService.addToCart(id);
+    this._CartService.addToCart(id).subscribe({
+      next: (response:CartInterface) => {
+        if (response.status === 'success') {
+
+          this._ToastrService.success(response.message);
+
+          this._CartService.updateCartNumberSignal(response.numOfCartItems)
+        }
+      },
+    });
   }
 
   removeFromWhish(id: string): void {
@@ -42,7 +54,7 @@ export class WhishlistComponent implements OnInit {
           this._ToastrService.success(response.message, '', {
             positionClass: 'toast-bottom-right',
           });
-
+          
           this.whishList = this.whishList.filter((item) =>
             response.data.includes(item._id)
           );

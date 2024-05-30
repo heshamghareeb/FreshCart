@@ -21,6 +21,7 @@ export class CartComponent implements OnInit {
   ngOnInit(): void {
     this._CartService.getCartUser().subscribe({
       next: (response) => {
+        console.log(response,'test1');
 
         this.cartDetails = response;
 
@@ -38,13 +39,18 @@ export class CartComponent implements OnInit {
       next: (response) => {
 
         this.cartDetails = response;
+        if (this.cartDetails.numOfCartItems == 0) {
+          this.clear();
+
+        }
+
         this._Renderer2.removeAttribute(element, 'disabled');
 
-        this._CartService.cartNumber.next(response.numOfCartItems);
+        this._CartService.cartNumber.next(this.cartDetails.numOfCartItems);
 
 
-        this._CartService.updateCartNumberSignal(response.numOfCartItems);
-  
+        this._CartService.updateCartNumberSignal(this.cartDetails.numOfCartItems);
+
       },
       error: (err) => {
         this._Renderer2.removeAttribute(element, 'disabled');
