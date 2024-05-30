@@ -1,5 +1,5 @@
 <section class="bg-main-light rounded shadow p-3">
-  <h1 class="display-4 text-center">Login Now</h1>
+  <h1 class="display-4 text-center">{{"Login Now" | translate}}</h1>
 
   <form
     class="vstack gap-3 w-75 mx-auto"
@@ -7,13 +7,13 @@
     (ngSubmit)="handleLogin()"
   >
     <div class="form-item">
-      <label for="email">Email:</label>
+      <label for="email">{{"Email" | translate}}:</label>
       <input
         formControlName="email"
         id="email"
         type="email"
         class="form-control"
-        placeholder="Your Email...."
+        placeholder="{{'Your Email' | translate}}...."
       />
 
       <ng-container
@@ -25,26 +25,26 @@
           class="alert alert-danger w-50 mx-auto p-1 mb-0"
           *ngIf="f['email'].getError('required')"
         >
-          Email Is Required
+          {{"Email Is Required" | translate}}
         </p>
         <p
           class="alert alert-danger w-50 mx-auto p-1 mb-0"
           *ngIf="f['email'].getError('email')"
         >
-          Email Invalid Format
+          {{"Email Invalid Format" | translate}}
         </p>
       </ng-container>
     </div>
 
     <div class="form-item">
-      <label for="password">Password:</label>
+      <label for="password">{{"Password" | translate}}:</label>
       <div class="position-relative">
         <input #pass
           formControlName="password"
           id="password"
           type="password"
           class="form-control"
-          placeholder="Your Password...."
+          placeholder="{{'Your Password' | translate}}...."
         />
         <span
           (click)="
@@ -54,10 +54,14 @@
               : (pass.type = 'password')
           "
           [ngClass]="{
-            'd-none': passwordShow
+            'd-none': passwordShow,
+            'end-0':translate.currentLang === 'en',
+            'start-0':translate.currentLang === 'ar'
           }"
           role="button"
-          class="position-absolute top-50 end-0 translate-middle-y me-2"
+          class="position-absolute top-50 end-0 translate-middle-y mx-2"
+
+
         >
           <i class="fas fa-eye"></i>
         </span>
@@ -66,9 +70,14 @@
           (click)="passwordShow = false; passwordShow == false
               ? (pass.type = 'password')
               : (pass.type = 'text')"
-          [ngClass]="{'d-none': !passwordShow}"
+          [ngClass]="{
+            'd-none': !passwordShow,
+            'end-0':translate.currentLang === 'en',
+            'start-0':translate.currentLang === 'ar'
+          }"
           role="button"
-          class="position-absolute top-50 end-0 translate-middle-y me-2"
+          class="position-absolute top-50 end-0 translate-middle-y mx-2"
+
         >
           <i class="fas fa-eye-slash"></i>
         </span>
@@ -84,13 +93,13 @@
           class="alert alert-danger w-50 mx-auto p-1 mb-0"
           *ngIf="f['password'].getError('required')"
         >
-          Password Is Required
+          {{"Password Is Required" | translate}}
         </p>
         <p
           class="alert alert-danger w-50 mx-auto p-1 mb-0"
           *ngIf="f['password'].getError('pattern')"
         >
-          Must be at least 6 chars
+          {{"Must be at least 6 chars" | translate}}
         </p>
       </ng-container>
     </div>
@@ -102,7 +111,7 @@
         [disabled]="loginForm.invalid"
         class="main-btn"
       >
-        <span>Login</span>
+        <span>{{"Login" | translate}}</span>
       </button>
 
       <button *ngIf="isLoading" type="button" disabled class="main-btn me-auto">
@@ -110,15 +119,9 @@
       </button>
 
       <a role="button" class="link-primary" routerLink="/forgotlogin"
-        >Forgot Password</a
+        >{{"Forgot Password" | translate}}</a
       >
     </div>
 
-    <!-- <p
-      class="alert alert-danger text-center w-50 mx-auto mb-0 p-1 mt-3"
-      *ngIf="errMsg"
-    >
-      {{ errMsg }}
-    </p> -->
   </form>
 </section>

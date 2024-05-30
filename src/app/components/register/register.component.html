@@ -1,5 +1,5 @@
 <section class="bg-main-light rounded shadow p-3">
-  <h1 class="display-3 text-center">Register Now</h1>
+  <h1 class="display-3 text-center">{{"Register Now" | translate}}</h1>
 
   <form
     class="vstack gap-3 w-75 mx-auto"
@@ -7,13 +7,13 @@
     (ngSubmit)="handleRegister()"
   >
     <div class="form-item">
-      <label for="name">Name:</label>
+      <label for="name">{{"Name" | translate}}:</label>
       <input
         formControlName="name"
         id="name"
         type="text"
         class="form-control"
-        placeholder="Your Name...."
+        placeholder="{{'Your Name' | translate}}...."
       />
 
       <ng-container
@@ -25,31 +25,31 @@
           class="alert alert-danger w-50 mx-auto p-1 mb-0"
           *ngIf="f['name'].getError('required')"
         >
-          Name Is Required
+          {{"Name Is Required" | translate}}
         </p>
         <p
           class="alert alert-danger w-50 mx-auto p-1 mb-0"
           *ngIf="f['name'].getError('minlength')"
         >
-          Name MinLength is 3
+          {{"Name Min Length is 3 chars" | translate}}
         </p>
         <p
           class="alert alert-danger w-50 mx-auto p-1 mb-0"
           *ngIf="f['name'].getError('maxlength')"
         >
-          Name MaxLength is 20
+          {{"Name Max Length is 20" | translate}}
         </p>
       </ng-container>
     </div>
 
     <div class="form-item">
-      <label for="email">Email:</label>
+      <label for="email">{{"Email" | translate}}:</label>
       <input
         formControlName="email"
         id="email"
         type="email"
         class="form-control"
-        placeholder="Your Email...."
+        placeholder="{{'Your Email' | translate}}...."
       />
 
       <ng-container
@@ -61,18 +61,19 @@
           class="alert alert-danger w-50 mx-auto p-1 mb-0"
           *ngIf="f['email'].getError('required')"
         >
-          Email Is Required
+          {{"Email Is Required" | translate}}
         </p>
         <p
           class="alert alert-danger w-50 mx-auto p-1 mb-0"
           *ngIf="f['email'].getError('email')"
         >
-          Email Invalid Format
+          {{"Email Invalid Format" | translate}}
         </p>
       </ng-container>
     </div>
 
     <div class="form-item">
+      <label for="password">{{"Password" | translate}}:</label>
       <div class="position-relative">
         <input
           #pass
@@ -80,7 +81,7 @@
           id="password"
           type="password"
           class="form-control"
-          placeholder="Your Password...."
+          placeholder="{{'Your Password' | translate}}...."
         />
         <span
           (click)="
@@ -90,10 +91,12 @@
               : (pass.type = 'password')
           "
           [ngClass]="{
-            'd-none': passwordShow
+            'd-none': passwordShow,
+            'end-0':translate.currentLang === 'en',
+            'start-0':translate.currentLang === 'ar'
           }"
           role="button"
-          class="position-absolute top-50 end-0 translate-middle-y me-2"
+          class="position-absolute top-50 end-0 translate-middle-y mx-2"
         >
           <i class="fas fa-eye"></i>
         </span>
@@ -106,10 +109,12 @@
               : (pass.type = 'text')
           "
           [ngClass]="{
-            'd-none': !passwordShow
+            'd-none': !passwordShow,
+            'end-0':translate.currentLang === 'en',
+            'start-0':translate.currentLang === 'ar'
           }"
           role="button"
-          class="position-absolute top-50 end-0 translate-middle-y me-2"
+          class="position-absolute top-50 end-0 translate-middle-y mx-2"
         >
           <i class="fas fa-eye-slash"></i>
         </span>
@@ -125,19 +130,19 @@
           class="alert alert-danger w-50 mx-auto p-1 mb-0"
           *ngIf="f['password'].getError('required')"
         >
-          Password Is Required
+          {{"Password Is Required" | translate}}
         </p>
         <p
           class="alert alert-danger w-50 mx-auto p-1 mb-0"
           *ngIf="f['password'].getError('pattern')"
         >
-          Must be at least 6 chars
+          {{"Must be at least 6 chars" | translate}}
         </p>
       </ng-container>
     </div>
 
     <div class="form-item">
-      <label for="rePassword">RePassword:</label>
+      <label for="rePassword">{{"RePassword" | translate}}:</label>
       <div class="position-relative">
         <input
           #repass
@@ -145,7 +150,7 @@
           id="rePassword"
           type="Password"
           class="form-control"
-          placeholder="Confirm Password...."
+          placeholder="{{'Confirm Password' | translate}}...."
         />
 
         <span
@@ -156,10 +161,12 @@
               : (repass.type = 'password')
           "
           [ngClass]="{
-            'd-none': rePasswordShow
+            'd-none': rePasswordShow,
+            'end-0':translate.currentLang === 'en',
+            'start-0':translate.currentLang === 'ar'
           }"
           role="button"
-          class="position-absolute top-50 end-0 translate-middle-y me-2"
+          class="position-absolute top-50 end-0 translate-middle-y mx-2"
         >
           <i class="fas fa-eye"></i>
         </span>
@@ -172,10 +179,12 @@
               : (repass.type = 'text')
           "
           [ngClass]="{
-            'd-none': !rePasswordShow
+            'd-none': !rePasswordShow,
+            'end-0':translate.currentLang === 'en',
+            'start-0':translate.currentLang === 'ar'
           }"
           role="button"
-          class="position-absolute top-50 end-0 translate-middle-y me-2"
+          class="position-absolute top-50 end-0 translate-middle-y mx-2"
         >
           <i class="fas fa-eye-slash"></i>
         </span>
@@ -191,25 +200,25 @@
           class="alert alert-danger w-50 mx-auto p-1 mb-0"
           *ngIf="f['rePassword'].getError('required')"
         >
-          RePassword Is Required
+          {{"RePassword Is Required" | translate}}
         </p>
         <p
           class="alert alert-danger w-50 mx-auto p-1 mb-0"
           *ngIf="f['rePassword'].getError('mismatch')"
         >
-          RePassword confirmation is incorrect
+          {{"RePassword confirmation is incorrect" | translate}}
         </p>
       </ng-container>
     </div>
 
     <div class="form-item">
-      <label for="phone">phone:</label>
+      <label for="phone">{{"Phone" | translate}}:</label>
       <input
         formControlName="phone"
         id="phone"
         type="tel"
         class="form-control"
-        placeholder="Your Phone...."
+        placeholder="{{'Your Phone' | translate}}...."
       />
 
       <ng-container
@@ -221,13 +230,13 @@
           class="alert alert-danger w-50 mx-auto p-1 mb-0"
           *ngIf="f['phone'].getError('required')"
         >
-          phone Is Required
+          {{"phone Is Required" | translate}}
         </p>
         <p
           class="alert alert-danger w-50 mx-auto p-1 mb-0"
           *ngIf="f['phone'].getError('pattern')"
         >
-          accept only egypt phone numbers
+          {{"accept only egypt phone numbers" | translate}}
         </p>
       </ng-container>
     </div>
@@ -238,7 +247,7 @@
       [disabled]="registerForm.invalid"
       class="main-btn ms-auto"
     >
-      <span>Register</span>
+      <span>{{"Register" | translate}}</span>
     </button>
 
     <button *ngIf="isLoading" type="button" disabled class="main-btn ms-auto">

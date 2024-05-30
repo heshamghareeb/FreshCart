@@ -10,12 +10,14 @@ exports.RegisterComponent = void 0;
 var core_1 = require("@angular/core");
 var common_1 = require("@angular/common");
 var forms_1 = require("@angular/forms");
+var core_2 = require("@ngx-translate/core");
 var RegisterComponent = /** @class */ (function () {
-    function RegisterComponent(_AuthService, _fb, _Router, toastr) {
+    function RegisterComponent(_AuthService, _fb, _Router, toastr, translate) {
         this._AuthService = _AuthService;
         this._fb = _fb;
         this._Router = _Router;
         this.toastr = toastr;
+        this.translate = translate;
         this.passwordShow = false;
         this.rePasswordShow = false;
         this.isLoading = false;
@@ -78,7 +80,7 @@ var RegisterComponent = /** @class */ (function () {
         core_1.Component({
             selector: 'app-register',
             standalone: true,
-            imports: [common_1.CommonModule, forms_1.ReactiveFormsModule],
+            imports: [common_1.CommonModule, forms_1.ReactiveFormsModule, core_2.TranslateModule],
             templateUrl: './register.component.html',
             styleUrls: ['./register.component.scss']
         })

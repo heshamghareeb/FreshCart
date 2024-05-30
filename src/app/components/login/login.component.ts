@@ -8,13 +8,14 @@ import {
   Validators,
 } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { ToastrService } from 'ngx-toastr';
 import { AuthService } from 'src/app/common/services/auth.service';
 
 @Component({
   selector: 'app-login',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule, RouterLink],
+  imports: [CommonModule, ReactiveFormsModule, RouterLink, TranslateModule],
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss'],
 })
@@ -23,7 +24,8 @@ export class LoginComponent {
     private _AuthService: AuthService,
     private _fb: FormBuilder,
     private _Router: Router,
-    private toastr: ToastrService
+    private toastr: ToastrService,
+    public   translate: TranslateService,
   ) {}
 
   passwordShow: boolean = false;

@@ -11,11 +11,12 @@ import {
 import { AuthService } from 'src/app/common/services/auth.service';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-register',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule],
+  imports: [CommonModule, ReactiveFormsModule, TranslateModule],
   templateUrl: './register.component.html',
   styleUrls: ['./register.component.scss'],
 })
@@ -24,7 +25,8 @@ export class RegisterComponent implements OnInit {
     private _AuthService: AuthService,
     private _fb: FormBuilder,
     private _Router: Router,
-    private toastr: ToastrService
+    private toastr: ToastrService,
+    public   translate: TranslateService,
   ) {}
 
   passwordShow: boolean = false;

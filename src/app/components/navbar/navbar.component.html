@@ -139,7 +139,7 @@
           <ul class="dropdown-menu dropstart"  ngbDropdownMenu aria-labelledby="navbarScrollingDropdown">
             <li (click)="changeLangage('en')" *ngIf="translate.currentLang == 'ar'" ngbDropdownItem class="p-2">
               <span class="">
-                <span>EN</span>
+                <!-- <span>EN</span> -->
                 <img class="p-1 flag-icon" src="./assets/images/united-states.png" alt="freshCart" />
             </span>
             </li>
@@ -147,7 +147,7 @@
             <li (click)="changeLangage('ar')" *ngIf="translate.currentLang == 'en'" ngbDropdownItem class="p-2">
               <span class="">
                 <img class="p-1 flag-icon" src="./assets/images/flag.png" alt="freshCart" />
-                <span>AR</span>
+                <!-- <span>AR</span> -->
             </span>
             </li>
 
@@ -178,17 +178,17 @@
         </li>
 
 
-        <!-- <li class="nav-item me-3 hstack navbar-social-language">
+        <li class="nav-item me-3 hstack navbar-social-language">
           <span class="d-block navbar-social-language" (click)="changeLangage('en')" *ngIf="translate.currentLang == 'ar'">
-            <span>EN</span>
+            <!-- <span>EN</span> -->
             <img class="p-1 flag-icon" src="./assets/images/united-states.png" alt="freshCart" />
           </span>
 
           <span class="d-block navbar-social-language" (click)="changeLangage('ar')" *ngIf="translate.currentLang == 'en'">
             <img class="p-1 flag-icon" src="./assets/images/flag.png" alt="freshCart" />
-            <span>AR</span>
+            <!-- <span>AR</span> -->
           </span>
-        </li> -->
+        </li>
 
       </ul>
 

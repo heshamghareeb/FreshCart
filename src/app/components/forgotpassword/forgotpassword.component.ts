@@ -14,12 +14,13 @@ import {
   Validators,
 } from '@angular/forms';
 import { Router } from '@angular/router';
+import { TranslateModule } from '@ngx-translate/core';
 import { AuthService } from 'src/app/common/services/auth.service';
 
 @Component({
   selector: 'app-forgotpassword',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule],
+  imports: [CommonModule, ReactiveFormsModule, TranslateModule],
   templateUrl: './forgotpassword.component.html',
   styleUrls: ['./forgotpassword.component.scss'],
 })
