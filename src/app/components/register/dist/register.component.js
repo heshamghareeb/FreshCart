@@ -12,17 +12,19 @@ var common_1 = require("@angular/common");
 var forms_1 = require("@angular/forms");
 var core_2 = require("@ngx-translate/core");
 var RegisterComponent = /** @class */ (function () {
-    function RegisterComponent(_AuthService, _fb, _Router, toastr, translate) {
+    function RegisterComponent(_AuthService, _fb, _Router, toastr, translate, renderer) {
         this._AuthService = _AuthService;
         this._fb = _fb;
         this._Router = _Router;
         this.toastr = toastr;
         this.translate = translate;
+        this.renderer = renderer;
         this.passwordShow = false;
         this.rePasswordShow = false;
         this.isLoading = false;
     }
     RegisterComponent.prototype.ngOnInit = function () {
+        var _this = this;
         this.registerForm = this._fb.group({
             name: [
                 '',
@@ -40,6 +42,11 @@ var RegisterComponent = /** @class */ (function () {
                 [forms_1.Validators.required, forms_1.Validators.pattern(/^01[0125][0-9]{8}$/)],
             ]
         }, { validator: [this.checkPassword] });
+        this.translate.onLangChange.subscribe(function (event) {
+            _this.updatePlaceholderStyle(event.lang);
+        });
+        // Set initial placeholder style
+        this.updatePlaceholderStyle(this.translate.currentLang || this.translate.defaultLang);
     };
     RegisterComponent.prototype.checkPassword = function (group) {
         var password = group.get('password');
@@ -76,6 +83,31 @@ var RegisterComponent = /** @class */ (function () {
             });
         }
     };
+    RegisterComponent.prototype.setPlaceholderStyle = function () {
+        var inputElement = this.myInput.nativeElement;
+        // Set placeholder text
+        this.renderer.setAttribute(inputElement, 'placeholder', 'Enter text here');
+        // Create a style element for placeholder styles
+        var style = document.createElement('style');
+        style.textContent = "\n      .centered-placeholder::placeholder {\n        text-align: center; /* Center the placeholder text */\n        color: gray;        /* Additional styles */\n        font-size: 1em;\n      }\n    ";
+        document.head.appendChild(style);
+        // Add the class to the input element
+        this.renderer.addClass(inputElement, 'centered-placeholder');
+    };
+    RegisterComponent.prototype.updatePlaceholderStyle = function (lang) {
+        var inputElement = this.myInput.nativeElement;
+        // Clear previous style
+        this.renderer.removeStyle(inputElement, 'text-align');
+        if (lang === 'ar') {
+            this.renderer.setStyle(inputElement, 'text-align', 'right');
+        }
+        else {
+            this.renderer.setStyle(inputElement, 'text-align', 'left');
+        }
+    };
+    __decorate([
+        core_1.ViewChild('myInput', { static: true })
+    ], RegisterComponent.prototype, "myInput");
     RegisterComponent = __decorate([
         core_1.Component({
             selector: 'app-register',

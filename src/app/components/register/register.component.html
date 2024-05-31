@@ -13,7 +13,7 @@
         id="name"
         type="text"
         class="form-control"
-        placeholder="{{'Your Name' | translate}}...."
+        placeholder="{{'Your Name' | translate}}"
       />
 
       <ng-container
@@ -49,7 +49,7 @@
         id="email"
         type="email"
         class="form-control"
-        placeholder="{{'Your Email' | translate}}...."
+        placeholder="{{'Your Email' | translate}}"
       />
 
       <ng-container
@@ -81,7 +81,7 @@
           id="password"
           type="password"
           class="form-control"
-          placeholder="{{'Your Password' | translate}}...."
+          placeholder="{{'Your Password' | translate}}"
         />
         <span
           (click)="
@@ -150,7 +150,7 @@
           id="rePassword"
           type="Password"
           class="form-control"
-          placeholder="{{'Confirm Password' | translate}}...."
+          placeholder="{{'Confirm Password' | translate}}"
         />
 
         <span
@@ -211,14 +211,15 @@
       </ng-container>
     </div>
 
-    <div class="form-item">
+    <div class="form-item ">
       <label for="phone">{{"Phone" | translate}}:</label>
       <input
+      #myInput
         formControlName="phone"
         id="phone"
         type="tel"
-        class="form-control"
-        placeholder="{{'Your Phone' | translate}}...."
+        class="form-control input-phone"
+        placeholder="{{'Your Phone' | translate}}"
       />
 
       <ng-container

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef, OnInit, Renderer2, ViewChild } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import {
   FormBuilder,
@@ -27,6 +27,7 @@ export class RegisterComponent implements OnInit {
     private _Router: Router,
     private toastr: ToastrService,
     public   translate: TranslateService,
+    private renderer: Renderer2
   ) {}
 
   passwordShow: boolean = false;
@@ -56,6 +57,14 @@ export class RegisterComponent implements OnInit {
       },
       { validator: [this.checkPassword] } as FormControlOptions
     );
+
+
+    this.translate.onLangChange.subscribe((event) => {
+      this.updatePlaceholderStyle(event.lang);
+    });
+
+    // Set initial placeholder style
+    this.updatePlaceholderStyle(this.translate.currentLang || this.translate.defaultLang);
   }
 
   checkPassword(group: AbstractControl): void {
@@ -93,4 +102,48 @@ export class RegisterComponent implements OnInit {
       });
     }
   }
+
+  @ViewChild('myInput', { static: true }) myInput!: ElementRef;
+
+  setPlaceholderStyle(): void {
+    const inputElement = this.myInput.nativeElement;
+
+    // Set placeholder text
+    this.renderer.setAttribute(inputElement, 'placeholder', 'Enter text here');
+
+    // Create a style element for placeholder styles
+    const style = document.createElement('style');
+    style.textContent = `
+      .centered-placeholder::placeholder {
+        text-align: center; /* Center the placeholder text */
+        color: gray;        /* Additional styles */
+        font-size: 1em;
+      }
+    `;
+    document.head.appendChild(style);
+
+    // Add the class to the input element
+    this.renderer.addClass(inputElement, 'centered-placeholder');
+  }
+
+
+  private updatePlaceholderStyle(lang: string): void {
+    const inputElement = this.myInput.nativeElement;
+
+    // Clear previous style
+    this.renderer.removeStyle(inputElement, 'text-align');
+
+    if (lang === 'ar') {
+      this.renderer.setStyle(inputElement, 'text-align', 'right');
+    } else {
+      this.renderer.setStyle(inputElement, 'text-align', 'left');
+    }
+  }
+
+
+
+
+
+
+
 }
