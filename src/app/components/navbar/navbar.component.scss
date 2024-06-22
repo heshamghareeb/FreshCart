@@ -67,3 +67,13 @@
   }
 
 }
+
+
+.logout-button{
+  &:hover{
+    color: rgba(var(--bs-emphasis-color-rgb), 1);
+  }
+  color: rgba(var(--bs-emphasis-color-rgb), 0.65)
+}
+
+

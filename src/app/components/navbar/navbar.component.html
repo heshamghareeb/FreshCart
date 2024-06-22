@@ -54,7 +54,7 @@
 
       <ul class="navbar-nav mt-2 mt-lg-0 navbar-icons " [ngClass]="{'ms-auto':translate.currentLang === 'en', 'me-auto':translate.currentLang === 'ar'}">
 
-        <li class="nav-item me-3 hstack">
+        <li class="nav-item  hstack">
           <a routerLink="/whishlist" class="text-main number-item">
             <i class="fas fa-heart fa-2x"></i>
             <!-- <span *ngIf="whishItemNumber"> {{ whishItemNumber }} </span> -->
@@ -120,7 +120,7 @@
           </a>
         </li> -->
 
-        <li class="nav-item me-3 hstack">
+        <li class="nav-item mx-3 hstack">
           <a class="nav-link position-relative" routerLink="/cart" >
             <i class="fas fa-cart-shopping fa-2xl text-main"  [ngClass]="
             {'fa-flip-horizontal':translate.currentLang === 'ar'}"></i>
@@ -132,7 +132,7 @@
           </a>
         </li>
 
-        <li class="nav-item dropdown pe-2 navbardropdown" ngbDropdown>
+        <li class="nav-item dropdown  navbardropdown" ngbDropdown>
           <a class="nav-link  text-main" id="navbarScrollingDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false" ngbDropdownToggle>
             <i class="fa-solid fa-bars nav-icons"></i>
           </a>
@@ -168,17 +168,16 @@
               <i class="fab fa-whatsapp text-main h4"></i>
             </a>
             </li>
-            <!-- <li ngbDropdownItem><hr class="dropdown-divider"></li>
-            <li ngbDropdownItem><a class="dropdown-item" href="#">Something else here</a></li> -->
 
             <li class="nav-item ms-auto align-content-center ">
               <span (click)="logOut()" class="nav-link h6" role="button">{{"SignOut"| translate}}</span>
             </li>
+
           </ul>
         </li>
 
 
-        <li class="nav-item me-3 hstack navbar-social-language">
+        <li class="nav-item hstack navbar-social-language">
           <span class="d-block navbar-social-language" (click)="changeLangage('en')" *ngIf="translate.currentLang == 'ar'">
             <!-- <span>EN</span> -->
             <img class="p-1 flag-icon" src="./assets/images/united-states.png" alt="freshCart" />
@@ -193,13 +192,14 @@
       </ul>
 
 
-      <div class="d-flex pt-2 navbar-social-language">
+      <ul class="d-flex pt-3 navbar-social-language ps-0">
 
 
           <a
           href="https://www.facebook.com/HxBoss"
           target="_blank"
           class="text-reset me-4 navbar-social-language"
+          [ngClass]="{'me-4':translate.currentLang === 'en', 'ms-4':translate.currentLang === 'ar'}"
           style="color: #4267B2 !important;"
           ><i class="fab fa-2xl fa-facebook" ></i>
           </a>
@@ -210,9 +210,13 @@
           class="text-reset navbar-social-language">
           <i class="fab fa-2xl fa-whatsapp text-main"></i>
           </a>
-      </div>
+      </ul>
 
-      <button  (click)="logOut()" class="nav-link h6 pt-3 navbar-social-language" role="button">{{"SignOut"| translate}}</button>
+      <ul class="ps-0 nav-item">
+
+        <button  (click)="logOut()" class="logout-button nav-link h6 pt-3 navbar-social-language" role="button">{{"SignOut"| translate}}</button>
+      </ul>
+
 
     </div>
   </div>
